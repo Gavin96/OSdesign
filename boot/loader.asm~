@@ -12,8 +12,8 @@ org  0100h
 
 ; 下面是 FAT12 磁盘的头, 之所以包含它是因为下面用到了磁盘的一些信息
 %include	"/home/caopeng/Tinix-master/boot/include/fat12hdr.inc"
-%include	"/home/caopeng/Tinix-master/boot/include/load.inc"
-%include	"/home/caopeng/Tinix-master/boot/include/pm.inc"
+%include	"load.inc"
+%include	"pm.inc"
 
 
 ; GDT ------------------------------------------------------------------------------------------------------------------------------------------------------------
