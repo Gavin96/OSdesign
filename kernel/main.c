@@ -127,10 +127,10 @@ PUBLIC int tinix_main()
 	//init priority
 	proc_table[0].priority = 15;
 	proc_table[1].priority =  2;
-	proc_table[2].priority =  3;
+	proc_table[2].priority =  12;
 	proc_table[3].priority =  4;
-	proc_table[4].priority =  5;
-	proc_table[5].priority =  13;
+	proc_table[4].priority =  7;
+	proc_table[5].priority =  12;
 	proc_table[6].priority =  10;
 
 	//init queue
@@ -192,24 +192,26 @@ void help()
 
 void show()
 {
+	printf("Process      State    Priority\n");
 	PROCESS* p;
 	int i;
 	for (i=0; i<NR_TASKS+NR_PROCS;i++)
 	{
 		p=&proc_table[i];
-		printf("process%d:",p->pid);
+		printf("process%d",p->pid);
 		switch (p->state)
 		{
 		case kRUNNABLE:
-			printf("    Runnable\n");
+			printf("    Runnable      ");
 			break;
 		case kRUNNING:
-			printf("    Running\n");
+			printf("    Running    ");
 			break;
 		case kREADY:
-			printf("    Ready\n");
+			printf("    Finish      ");
 			break;
 		}
+		printf("%d\n",p->priority);
 	}
 }
 
@@ -263,11 +265,18 @@ void dealWithCommand(char* command)
 	int i=0;
 	for(; i<100;i++)
 		str[i]=0;
+
 	int number;
 	readOneStringAndOneNumber(command,str,& number);
 	if (strcmp(str,"start")==0)
 	{
-		if (number<0 || number>NR_TASKS+NR_PROCS)
+		char* state;
+		state= (char *)proc_table[number].state;
+		if(strcmp(state,"kRUNNABLE")!=0)
+		{
+			printf("The process is blocked");
+		}
+		else if (number<0 || number>NR_TASKS+NR_PROCS)
 		{
 			printf("No found this process!!");
 		}
@@ -284,9 +293,15 @@ void dealWithCommand(char* command)
 	}
 	if (strcmp(str,"kill")==0)
 	{
-		if (number<0 || number>NR_TASKS+NR_PROCS)
+		char* state;
+		state= (char *)proc_table[number].state;
+		if(strcmp(state,"kRUNNING")==0)
 		{
-			printf("No found this process!!");
+			printf("The process hasn't run\n");
+		}
+		else if (number<0 || number>NR_TASKS+NR_PROCS)
+		{
+			printf("No found this process!!\n");
 		}
 		else if (number==0 || number==6)
 		{
@@ -326,10 +341,16 @@ void Terminal()
  *======================================================================*/
 void TestB()
 {
-	int i = 0;
-	while(1){
-		printf("B");
-		milli_delay(1000);
+	char* state;
+	state= (char *)proc_table[2].state;
+	if(strcmp(state,"kREADY")!=0)
+	{
+		int i = 0;
+		while(1){
+			printf("2   ");
+			milli_delay(1000);
+		}
+
 	}
 }
 
@@ -340,30 +361,46 @@ void TestB()
  *======================================================================*/
 void TestC()
 {
-	int i = 0;
-	while(1){
-		printf("C");
-		milli_delay(1000);
+	char* state;
+	state= (char *)proc_table[3].state;
+	if(strcmp(state,"kREADY")!=0)
+	{
+		int i = 0;
+		while(1){
+			printf("3   ");
+			milli_delay(1000);
+		}
+
 	}
 }
 
 void TestD()
 {
-	int i=0;
-	while (1)
+	char* state;
+	state= (char *)proc_table[4].state;
+	if(strcmp(state,"kREADY")!=0)
 	{
-		printf("D");
-		milli_delay(1000);
+		int i = 0;
+		while(1){
+			printf("4   ");
+			milli_delay(1000);
+		}
+
 	}
 }
 
 void TestE()
 {
-	int i=0;
-	while (1)
+	char* state;
+	state= (char *)proc_table[5].state;
+	if(strcmp(state,"kREADY")!=0)
 	{
-		printf("E");
-		milli_delay(1000);
+		int i = 0;
+		while(1){
+			printf("5   ");
+			milli_delay(1000);
+		}
+
 	}
 }
 
