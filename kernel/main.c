@@ -177,16 +177,14 @@ void help()
 	printf("                          Welcome to Our OS System ^_^ \n");
 	printf("           ***********************************************\n");
 	printf("\n");
-	printf("      *////////////////////////////////////////////////////////*\n");
-	printf("      *////  help         --------  show the help menu     ////*\n");
-	printf("      *////  clear        --------  clear screen           ////*\n");
-	printf("      *////  alt+F2       --------  show the process run   ////*\n");
-	printf("      *////  alt+F3       --------  goBang game            ////*\n");
-	printf("      *////  alt+F4       --------  guess number game      ////*\n");
-	printf("      *////  kill 2~5     --------  kill the process 2~5   ////*\n");
-	printf("      *////  start 2~5    --------  start the process 2~5  ////*\n");
-	printf("      *////  show         --------  show the process state ////*\n");
-	printf("      *////////////////////////////////////////////////////////*\n");
+	printf("      *****  help         --------  show the help menu    *****\n");
+	printf("      *****  clear        --------  clear screen          *****\n");
+	printf("      *****  alt+F2       --------  show the process run  *****\n");
+	printf("      *****  alt+F3       --------  goBang game           *****\n");
+	printf("      *****  kill 2~5     --------  kill the process 2~5  *****\n");
+	printf("      *****  start 2~5    --------  start the process 2~5 *****\n");
+	printf("      *****  show         --------  show the process state*****\n");
+	printf("      *********************************************************\n");
 	printf("\n");
 }
 
