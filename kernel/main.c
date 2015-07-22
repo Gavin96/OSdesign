@@ -130,16 +130,9 @@ PUBLIC int tinix_main()
 	proc_table[2].priority =  3;
 	proc_table[3].priority =  4;
 	proc_table[4].priority =  5;
-	proc_table[5].priority =  8;
+	proc_table[5].priority =  13;
 	proc_table[6].priority =  10;
-	//init ticks
-	//proc_table[0].ticks = 10;
-	//proc_table[1].ticks=15;
-	//proc_table[2].ticks=18;
-	//proc_table[3].ticks=12;
-	//proc_table[4].ticks=14;
-	//proc_table[5].ticks=8;
-	//proc_table[6].ticks=5;
+
 	//init queue
 	firstLen=firstHead=secondLen=lastLen=0;
 	for (i=0; i<NR_TASKS+NR_PROCS;i++)

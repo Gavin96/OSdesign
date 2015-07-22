@@ -24,18 +24,18 @@ void initializeAllPro()	//init all processes
 	secondHead=0;
 	firstHead=0;
 	lastLen=0;
+	firstTick=2;
+	secondTick=4;
 	int i;
 	for (i=0; i<NR_TASKS+NR_PROCS; i++)
 	{
 		p=&proc_table[i]; 
-		printf("%d\n",p->priority);
-		printf("%d\n",p->ticks);
 		if (p->state!=kRUNNABLE) continue;
 		if (p->priority>=10)
 		{
 			firstQueue[firstLen]=p;
 			firstLen++;
-			p->ticks=2;
+			p->ticks=firstTick;
 			p->whichQueue=1;
 			
 		}
@@ -43,7 +43,7 @@ void initializeAllPro()	//init all processes
 		{
 			secondQueue[secondLen]=p;
 			secondLen++;
-			p->ticks=3;
+			p->ticks=secondTick;
 			p->whichQueue=2;
 			
 		}
@@ -76,7 +76,8 @@ PUBLIC void schedule()
 		if (firstLen-firstHead>0)
 		{		
 			p_proc_ready=firstQueue[firstHead];	//第一个队列按照先到先得
-			greatest_priority=p_proc_ready->ticks;
+			//greatest_priority=p_proc_ready->ticks;
+			greatest_priority=p_proc_ready->priority;
 			break;
 		}
 		else if(secondLen-secondHead>0)						//第二个队列按照优先级
