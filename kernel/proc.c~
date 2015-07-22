@@ -54,7 +54,8 @@ void initializeAllPro()	//init all processes
 			p->ticks=p->priority;
 			p->whichQueue=3;    
 		}
-
+		printf("%d\n",p->priority);
+		printf("%d\n",p->ticks);
 	}
 	
 
