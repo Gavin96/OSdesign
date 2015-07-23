@@ -2,7 +2,7 @@
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                                proc.c
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                                                    Forrest Yu, 2005
+                                                    
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 #include "type.h"
@@ -75,14 +75,14 @@ PUBLIC void schedule()
 	{
 		if (firstLen-firstHead>0)
 		{		
-			p_proc_ready=firstQueue[firstHead];	//第一个队列按照先到先得
+			p_proc_ready=firstQueue[firstHead];	
 			//greatest_priority=p_proc_ready->ticks;
 			greatest_priority=p_proc_ready->priority;
 			break;
 		}
-		else if(secondLen-secondHead>0)						//第二个队列按照优先级
+		else if(secondLen-secondHead>0)						
 		{
-			for (i=0; i<secondLen; i++)		//第二个队列增设判断是否为runnable状态
+			for (i=0; i<secondLen; i++)		
 			{
 				p=secondQueue[i];
 				if (p->state!=kRUNNABLE || p->ticks==0) continue;
@@ -91,7 +91,7 @@ PUBLIC void schedule()
 					greatest_priority = p->ticks;
 					p_proc_ready = p;
 				}
-				/*{	下面代码被卡死。。。我也不懂为什么。。
+				/*{	
 					if (p->priority>greatest_priority && p->ticks!=0)
 					{
 						greatest_priority=p->priority;
