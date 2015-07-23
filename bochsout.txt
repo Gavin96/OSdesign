@@ -29,13 +29,13 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe 
-00000000000i[MEM0 ] allocated memory at 0xb3e73008. after alignment, vector=0xb3e74000
+00000000000i[MEM0 ] allocated memory at 0xb3e5a008. after alignment, vector=0xb3e5b000
 00000000000i[MEM0 ] 32.00MB
 00000000000i[MEM0 ] mem block size = 0x00100000, blocks=32
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/usr/local/share/bochs/BIOS-bochs-latest')
 00000000000i[MEM0 ] rom at 0xc0000/41472 ('/usr/share/vgabios/vgabios.bin')
 00000000000i[CMOS ] Using local time for initial clock
-00000000000i[CMOS ] Setting initial clock to: Wed Jul 22 02:06:56 2015 (time0=1437556016)
+00000000000i[CMOS ] Setting initial clock to: Wed Jul 22 16:50:41 2015 (time0=1437609041)
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[DMA  ] channel 2 used by Floppy Drive
 00000000000i[FDD  ] fd0: 'TINIX.IMG' ro=0, h=2,t=80,spt=18
@@ -116,25 +116,25 @@
 00000832636i[BIOS ] bios_table_addr: 0x000fbc18 end=0x000fcc00
 00000845313i[BIOS ] bios_table_cur_addr: 0x000fbc18
 00012943037i[BIOS ] Booting from 0000:7c00
-00994024000i[     ] Ctrl-C detected in signal handler.
-00994024000i[     ] dbg: Quit
-00994024000i[CPU0 ] CPU is in protected mode (active)
-00994024000i[CPU0 ] CS.d_b = 32 bit
-00994024000i[CPU0 ] SS.d_b = 32 bit
-00994024000i[CPU0 ] | EAX=00072afc  EBX=00047fdc  ECX=00017318  EDX=00000010
-00994024000i[CPU0 ] | ESP=00072ab4  EBP=000480ec  ESI=00072ab4  EDI=00000000
-00994024000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf SF zf AF PF cf
-00994024000i[CPU0 ] | SEG selector     base    limit G D
-00994024000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
-00994024000i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
-00994024000i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00994024000i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00994024000i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00994024000i[CPU0 ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00994024000i[CPU0 ] |  GS:001b( 0003| 0|  3) 000b8000 0000ffff 0 0
-00994024000i[CPU0 ] | EIP=000307fb (000307fb)
-00994024000i[CPU0 ] | CR0=0xe0000011 CR2=0x00000000
-00994024000i[CPU0 ] | CR3=0x00200000 CR4=0x00000000
-00994024000i[CMOS ] Last time is 1437556264 (Wed Jul 22 02:11:04 2015)
-00994024000i[XGUI ] Exit
-00994024000i[CTRL ] quit_sim called with exit code 0
+00677958564i[     ] Ctrl-C detected in signal handler.
+00677958565i[     ] dbg: Quit
+00677958565i[CPU0 ] CPU is in protected mode (active)
+00677958565i[CPU0 ] CS.d_b = 32 bit
+00677958565i[CPU0 ] SS.d_b = 32 bit
+00677958565i[CPU0 ] | EAX=00072a48  EBX=000680fc  ECX=00000004  EDX=00000000
+00677958565i[CPU0 ] | ESP=00038090  EBP=000380a0  ESI=000729c4  EDI=00000000
+00677958565i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf SF zf af PF cf
+00677958565i[CPU0 ] | SEG selector     base    limit G D
+00677958565i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+00677958565i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  GS:001b( 0003| 0|  3) 000b8000 0000ffff 0 0
+00677958565i[CPU0 ] | EIP=0003345a (0003345a)
+00677958565i[CPU0 ] | CR0=0xe0000011 CR2=0x00000000
+00677958565i[CPU0 ] | CR3=0x00200000 CR4=0x00000000
+00677958565i[CMOS ] Last time is 1437609210 (Wed Jul 22 16:53:30 2015)
+00677958565i[XGUI ] Exit
+00677958565i[CTRL ] quit_sim called with exit code 0
