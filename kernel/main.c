@@ -14,6 +14,7 @@
 #include "console.h"
 #include "global.h"
 #include "proto.h"
+#include "headfile.h"
 
 int strcmp(char *str1,char *str2)
 {
@@ -144,8 +145,8 @@ PUBLIC int tinix_main()
 	proc_table[2].nr_tty = 1;
 	proc_table[3].nr_tty = 1;
 	proc_table[4].nr_tty = 1;
-	proc_table[5].nr_tty = 1;
-	proc_table[6].nr_tty = 2;
+	proc_table[5].nr_tty = 2;
+	proc_table[6].nr_tty = 3;
 
 	k_reenter	= 0;
 	ticks		= 0;
@@ -387,19 +388,479 @@ void TestD()
 	}
 }
 
+
+
+
+/*======================================================================*
+                               2048
+ *======================================================================*/
+
+int same[SIZE][SIZE]= {};
+
+void line(void)
+{
+    int i = 0;
+    for (i =0; i <SIZE; i++)
+    {
+        printf("-----");
+    }
+}
+
+
+void set_number(int row, int vol)
+{
+    switch(arr[row][vol])
+    {
+        case 0:
+            printf("|[0]");
+            break;
+        case 2:
+            printf("|[2]");
+            break;
+        case 4:
+            printf("|[4]");
+            break;
+        case 8:
+            printf("|[8]");
+            break;
+        case 16:
+            printf("|[16]");
+            break;
+        case 32:
+            printf("|[32]");
+            break;
+        case 64:
+            printf("|[64]");
+            break;
+        case 128:
+            printf("|[128]");
+            break;
+        case 256:
+            printf("|[256]");
+            break;
+        case 512:
+            printf("|[512]");
+            break;
+        case 1024:
+            printf("|[1024]");
+            break;
+        case 2048:
+            printf("|[2048]");
+            break;
+        default:
+            break;
+    }
+}
+
+
+void refresh_show(void)
+{
+    int i =0, j =0;
+    //clearScreen();
+    printf("\n\n");
+    printf("    GAME: 2048\n");
+    //printf(" SCORE        \n");
+    //printf("  %d        \n", score);
+    line();
+    printf("\n");
+    for(i =0; i <4; i++)
+    {
+        for(j =0; j <4; j++)
+        {
+            set_number(i, j);
+	    printf("|  ");
+        }
+        
+        printf("\n");
+        line();
+        printf("\n");
+    }
+    printf("Q(exit)   R(restart_2048)\n");
+}
+
+void move_up(void)
+{
+    int i =0, j =0;		//	循环变量
+    int point = 0;		//	定位作用
+    
+    for (i =0; i <SIZE; i++)
+    {
+        point = 0;
+        for(j =1; j <SIZE; j++)
+        {
+            //如果没这个if，则要在两者相等处做个同为O的分支
+            if (arr[j][i] > 0)
+            {
+                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
+                if (arr[point][i] == arr[j][i])
+                {
+                    arr[point][i] *= 2;
+                    score += arr[point][i];
+                    arr[j][i] = 0;
+                    point++;
+                }
+                else if(arr[point][i] == 0)
+                {
+                    arr[point][i] = arr[j][i];
+                    arr[j][i] = 0;
+                }
+                else
+                {
+                    arr[++point][i] = arr[j][i];
+                    if (point != j)
+                    {
+                        arr[j][i] = 0;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+void move_down(void)
+{
+    int i =0, j =0;		//	循环变量
+    int point = 0;		//	定位作用
+    
+    for (i =0; i <SIZE; i++)
+    {
+        point = SIZE-1;
+        for(j =SIZE-2; j >=0; j--)
+        {
+            //如果没这个if，则要在两者相等处做个同为O的分支
+            if (arr[j][i] > 0)
+            {
+                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
+                if (arr[point][i] == arr[j][i])
+                {
+                    arr[point][i] *= 2;
+                    score += arr[point][i];
+                    arr[j][i] = 0;
+                    point--;
+                }
+                else if(arr[point][i] == 0)
+                {
+                    arr[point][i] = arr[j][i];
+                    arr[j][i] = 0;
+                }
+                else
+                {
+                    arr[--point][i] = arr[j][i];
+                    if (point != j)
+                    {
+                        arr[j][i] = 0;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+void move_left(void)
+{
+    int i =0, j =0;		//	循环变量
+    int point = 0;		//	定位作用
+    
+    for (i =0; i <SIZE; i++)
+    {
+        point = 0;
+        for(j =1; j <SIZE; j++)
+        {
+            //如果没这个if，则要在两者相等处做个同为O的分支
+            if (arr[i][j] > 0)
+            {
+                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
+                if (arr[i][point] == arr[i][j])
+                {
+                    arr[i][point] *= 2;
+                    score += arr[i][point];
+                    arr[i][j] = 0;
+                    point++;
+                }
+                else if(arr[i][point] == 0)
+                {
+                    arr[i][point] = arr[i][j];
+                    arr[i][j] = 0;
+                }
+                else
+                {
+                    arr[i][++point] = arr[i][j];
+                    if (point != j)
+                    {
+                        arr[i][j] = 0;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+void move_right(void)
+{
+    int i =0, j =0;		//	循环变量
+    int point = 0;		//	定位作用
+    
+    for (i =0; i <SIZE; i++)
+    {
+        point = SIZE-1;
+        for(j =SIZE-2; j >=0; j--)
+        {
+            //如果没这个if，则要在两者相等处做个同为O的分支
+            if (arr[i][j] > 0)
+            {
+                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
+                if (arr[i][point] == arr[i][j])
+                {
+                    arr[i][point] *= 2;
+                    score += arr[i][point];
+                    arr[i][j] = 0;
+                    point--;
+                }
+                else if(arr[i][point] == 0)
+                {
+                    arr[i][point] = arr[i][j];
+                    arr[i][j] = 0;
+                }
+                else
+                {
+                    arr[i][--point] = arr[i][j];
+                    if (point != j)
+                    {
+                        arr[i][j] = 0;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+int game_judge(void)
+{
+    int i = 0, j = 0;
+    // 判断是否胜利
+    for (i =0; i <SIZE; i++)
+        for(j =0; j <SIZE; j++)
+        {
+            if (arr[i][j] == 2048)
+            {
+                return 2;
+            }
+        }
+    //判断是否有空格，有则继续
+    for (i =0; i <SIZE; i++)
+        for(j =0; j <SIZE; j++)
+        {
+            if(arr[i][j] == 0)
+            {
+                return 1;
+            }
+        }
+    //判断是否相邻有重复，有则游戏继续
+    for (i =0; i <SIZE; i++)
+        for(j =0; j <SIZE-1; j++)
+        {
+            if ((arr[i][j] == arr[i][j+1]) || (arr[j][i] == arr[j+1][i]))
+            {
+                return 1;
+            }
+        }
+    
+    //没地可走，则game over
+    return 0;
+}
+
+void add_number(void)
+{
+    int num = 10 % 3 ? 2 : 4;	// 生成2的概率是4的2倍
+    int un[SIZE * SIZE] = {};		// 记录没有被占据的位置
+    int i = 0, j =0, cnt = 0;
+    int loc = 0;
+    for (i =0; i <SIZE; i++)
+        for (j =0; j <SIZE; j++)
+        {
+            //if (arr[i][j] == 0 && loc-- == 0 )
+            if (arr[i][j] == 0)
+            {
+                un[cnt] = i * 10 + j;
+                cnt++;
+            }
+        }
+    loc = 20 % ++cnt;				//随机挑选未被占据的位置
+    
+    // 复原数组存放数字对应的序列
+    i = un[loc] / 10;
+    j = un[loc] % 10;
+    arr[i][j] = num;
+
+}
+
+void restart_2048(void)
+{
+    int i = 0, j = 0;
+    int row = 0, vol = 0;
+    for (i =0; i <SIZE; i++)
+        for(j =0; j <SIZE; j++)
+        {
+            arr[i][j] = 0;
+        }
+    row = 35 % SIZE;
+    vol = 23 % SIZE;
+    arr[row][vol] = 2;
+    add_number();
+}
+
+void assign(void)
+{
+    int i =0, j =0;
+    
+    for (i =0; i <SIZE; i++)
+        for (j =0; j <SIZE; j++)
+        {
+            same[i][j] = arr[i][j];
+        }
+}
+
+int same_judge()
+{
+    int i = 0, j =0;
+    
+    for (i =0; i <SIZE; i++)
+        for (j =0; j <SIZE; j++)
+        {
+            if (same[i][j] != arr[i][j])
+            {
+                return 0;
+            }
+        }
+    return 1;
+}
+
+
+
+
+
+void start_game()
+{
+    int judge = 0;
+   // char quit =0;
+   // char move =0;
+	TTY *moveTty=tty_table;
+	moveTty->startScanf =0;
+	
+	
+	TTY *quitTty=tty_table;
+	quitTty->startScanf =0;
+	
+	
+    while(1)
+    {
+        add_number();
+        refresh_show();
+        assign();          //记录数组，对比可知操作后数字是否有移动
+        openStartScanf(moveTty);
+	
+
+	while (moveTty->startScanf); 
+		strlwr(moveTty->str);
+		if (strcmp(moveTty->str,"w")==0 || strcmp(moveTty->str,"W")==0){
+       			move_up();
+                	break;}
+            	else if (strcmp(moveTty->str,"a")==0 || strcmp(moveTty->str,"A")==0){
+       			move_up();
+                	break;}
+		else if (strcmp(moveTty->str,"s")==0 || strcmp(moveTty->str,"S")==0){
+       			move_up();
+                	break;}
+		else if (strcmp(moveTty->str,"d")==0 || strcmp(moveTty->str,"D")==0){
+       			move_up();
+                	break;}
+		else if (strcmp(moveTty->str,"q")==0 || strcmp(moveTty->str,"Q")==0){
+       			printf("Are you sure? Y/N\n");
+			openStartScanf(quitTty);
+			while (quitTty->startScanf); 
+				strlwr(quitTty->str);
+				if (strcmp(quitTty->str,"y")==0 || strcmp(quitTty->str,"Y")==0){
+               				return;	
+               			}
+               			else
+                    			{continue;
+				}
+			
+		}
+           	else if (strcmp(moveTty->str,"r")==0 || strcmp(moveTty->str,"R")==0){
+                	restart_2048();
+                	score = 0;
+                	continue;}
+
+		else {
+                	continue;}
+        
+        
+        
+        switch (game_judge())
+        {
+            case 2:
+                printf("YOU WIN !!!\n");
+                printf("Do you want to play again (Y/N)\n");
+                restart_2048();
+                score = 0;
+                
+                while (quitTty->startScanf) {
+				strlwr(quitTty->str);
+				if (strcmp(quitTty->str,"y")==0 || strcmp(quitTty->str,"Y")==0){
+               				continue;	
+               			}
+               			else
+                    			{return;
+				}
+			}	
+                
+            case 1:
+                break;
+            default:
+                printf("YOU FAIL !!!\n");
+                printf("Do you want to restart_2048 (Y/N)\n");
+                restart_2048();
+                score = 0;
+                
+                while (quitTty->startScanf) {
+				strlwr(quitTty->str);
+				if (strcmp(quitTty->str,"y")==0 || strcmp(quitTty->str,"Y")==0){
+               				continue;	
+               			}
+               			else
+                    			{return;
+				}
+			}
+        }
+        
+        if (same_judge())
+        {
+            continue;
+        }
+        
+        add_number();
+        
+    }
+    
+}
+
+/*int main(void)
+{
+    srand((unsigned)time(0));
+    
+    start_game();
+    return 0;
+}*/
+
 void TestE()
 {
-	char* state;
-	state= (char *)proc_table[5].state;
-	if(strcmp(state,"kREADY")!=0)
-	{
-		int i = 0;
-		while(1){
-			printf("5   ");
-			milli_delay(1000);
-		}
-
-	}
+	start_game();
+    	return ;//-0
 }
 
 /*======================================================================*

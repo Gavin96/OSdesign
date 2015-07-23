@@ -6,8 +6,9 @@
 megs: 32
 
 # filename of ROM images
-romimage: file=$BXSHARE/BIOS-bochs-latest
-vgaromimage: file=/usr/share/vgabios/vgabios.bin
+romimage: file=/home/pisces/bochs-2.4.5/bios/BIOS-bochs-latest
+vgaromimage: file=/home/pisces/bochs-2.4.5/bios/VGABIOS-lgpl-latest
+
 
 # what disk images will be used 
 floppya: 1_44=TINIX.IMG, status=inserted
@@ -22,4 +23,5 @@ log: bochsout.txt
 mouse: enabled=0
 
 # enable key mapping, using US layout as default.
-keyboard_mapping: enabled=1, map=$BXSHARE/keymaps/x11-pc-us.map
+#keyboard_mapping: enabled=1, map=$BXSHARE/keymaps/x11-pc-us.map
+display_library:sdl
