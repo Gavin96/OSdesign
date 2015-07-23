@@ -40,18 +40,18 @@ void strlwr(char *str)
 void addToQueue(PROCESS* p)
 {
 	p->state=kRUNNABLE;
-//	if (p->priority>=10)
-//	{
+	if (p->priority>=10)
+	{
 		firstQueue[firstLen]=p;
 		firstLen++;
 		p->ticks=2;
 		p->whichQueue=1;
-//	}
-/*	else if(p->priority>=5)
+	}
+	else if(p->priority>=5)
 	{
 		secondQueue[secondLen]=p;
 		secondLen++;
-		p->ticks=4;
+		p->ticks=3;
 		p->whichQueue=2;
 	}
 	else
@@ -61,19 +61,19 @@ void addToQueue(PROCESS* p)
 		p->ticks=p->priority;
 		p->whichQueue=3;
 	}
-*/}
+}
 
 /*======================================================================*
-                            tinix_main
+                            Utopia.main
  *======================================================================*/
 PUBLIC int tinix_main()
 {
 	//beginning display
 	clearScreen();
 	disp_color_str("*************************************************************\n", 0x3);
-	disp_color_str("**********               TINIX v1.0.1              **********\n", 0x3);
+	disp_color_str("**********               UTOPIA v1.0.1              **********\n", 0x3);
 	disp_color_str("*********  1352911 Jasmine 1352913 Picses 1352873 Gavin  ********\n", 0x3);
-	disp_color_str("**********   Welcome to Our Operating System ^_^   **********\n", 0x3);
+	disp_color_str("**********   Welcome to Our Utopia OS! ^_^   **********\n", 0x3);
 	disp_color_str("                                                             \n", 0x3);
 	disp_color_str("******* You Can Input HELP First to Know Our System  *********\n", 0x3);
 	disp_color_str("*************************************************************\n", 0x3);
@@ -86,13 +86,13 @@ PUBLIC int tinix_main()
 	t_8		rpl;
 	int		eflags;
 	for(i=0;i<NR_TASKS+NR_PROCS;i++){
-		if (i < NR_TASKS) {	/* ÈÎÎñ */
+		if (i < NR_TASKS) {	/* task table */
 			p_task		= task_table + i;
 			privilege	= PRIVILEGE_TASK;
 			rpl		= RPL_TASK;
 			eflags		= 0x1202;	/* IF=1, IOPL=1, bit 2 is always 1 */
 		}
-		else {			/* ÓÃ»§œø³Ì */
+		else {			/* process table */
 			p_task		= user_proc_table + (i - NR_TASKS);
 			privilege	= PRIVILEGE_USER;
 			rpl		= RPL_USER;
@@ -127,7 +127,7 @@ PUBLIC int tinix_main()
 
 	//init priority
 	proc_table[0].priority = 15;
-	proc_table[1].priority =  15;
+	proc_table[1].priority =  2;
 	proc_table[2].priority =  12;
 	proc_table[3].priority =  4;
 	proc_table[4].priority =  7;
@@ -177,17 +177,18 @@ void clearScreen()
 void help()
 {
 	printf("           ***********************************************\n");
-	printf("                          Welcome to Our OS System ^_^ \n");
+	printf("                          Welcome to Utopia OS System ^_^ \n");
 	printf("           ***********************************************\n");
 	printf("\n");
 	printf("      *****  help         --------  show the help menu    *****\n");
 	printf("      *****  clear        --------  clear screen          *****\n");
-	printf("      *****  alt+F2       --------  show the process run  *****\n");
-	printf("      *****  alt+F3       --------  goBang game           *****\n");
+	printf("      *****  fn+F2       --------  show the process run  *****\n");
+	printf("      *****  fn+F5       --------  2048 game           *****\n");
 	printf("      *****  kill 2~5     --------  kill the process 2~5  *****\n");
 	printf("      *****  start 2~5    --------  start the process 2~5 *****\n");
 	printf("      *****  ready 2~5    --------  make the process 2~5 ready \n");
 	printf("      *****  show         --------  show the process state*****\n");
+	printf("      *****  chat         --------  chat with me (@-@) *****\n");
 	printf("      *********************************************************\n");
 	printf("\n");
 }
@@ -207,13 +208,51 @@ void show()
 			printf("    Runnable      ");
 			break;
 		case kRUNNING:
-			printf("    Running       ");
+			printf("    Running    ");
 			break;
 		case kREADY:
-			printf("    Finish        ");
+			printf("    Finish      ");
 			break;
 		}
 		printf("%d\n",p->priority);
+	}
+}
+
+void chat(){
+	printf("******************************************\n");
+	printf("*********        Guten Tag!      *********\n");
+	printf("*********   Let's Chat!   (@-@)  *********\n");
+	printf("******** Utopia Operating System  ********\n");
+	printf("******************************************\n");
+	printf("\n");
+	printf("Mr Uto: Hello! What can I do for you? >_< \n");
+	printf("You: ");
+
+	TTY *chat_tty=tty_table;
+	chat_tty->startScanf=0;
+	while(1){
+	openStartScanf(chat_tty);
+	while (chat_tty->startScanf); 
+	//strlwr(chat_tty->str);
+	if (strcmp(chat_tty->str,"What is your name")==0){
+		printf("Mr Uto: My name is Utopia!  ^.^ \n");
+		printf("You: ");
+		continue;
+	}
+	else if (strcmp(chat_tty->str,"Can you speak German")==0){
+		printf("Mr Uto: Ja, ich spreche ein bisschen Deutsch!  ^.^ \n");
+		printf("You: ");
+		continue;
+	}
+	else if (strcmp(chat_tty->str,"Bye")==0){
+		printf("Mr Uto: Bye!   ^.^ \n");
+		break;
+	}
+	else {
+		printf("Mr Uto: (@.@) I can't understand your language... $%#*&@$%$  \n");
+		printf("You: ");
+		continue;
+	}
 	}
 }
 
@@ -262,13 +301,17 @@ void dealWithCommand(char* command)
 		show();
 		return ;
 	}
-
+	if (strcmp(command,"chat")==0)
+	{
+		chat();
+		return ;
+	}
 
 	char str[100];
 	int i=0;
 	for(; i<100;i++)
 		str[i]=0;
-	printf("%s",command);
+
 	int number;
 	readOneStringAndOneNumber(command,str,& number);
 	if (strcmp(str,"start")==0)
@@ -277,11 +320,11 @@ void dealWithCommand(char* command)
 		state= (char *)proc_table[number].state;
 		if(strcmp(state,"kRUNNABLE")!=0)
 		{
-			printf("The process is blocked");
+			printf("The process can't run\n");
 		}
 		else if (number<0 || number>NR_TASKS+NR_PROCS)
 		{
-			printf("No found this process!!");
+			printf("No found this process!!\n");
 		}
 		else if (number==0 || number==6)
 		{
@@ -340,6 +383,7 @@ void dealWithCommand(char* command)
 		}
 		return ;
 	}
+	printf("%s", str);
 	printf("%s", str);
 	printf("can not find this command\n");
 }
@@ -807,15 +851,13 @@ void start_game()
         refresh_show();
         assign();          //记录数组，对比可知操作后数字是否有移动
 	printf("input operation:");  
-	//TTY *moveTty=tty_table + 6;
-	//moveTty->startScanf =0;      
+	 
 	openStartScanf(moveTty);
 	
-	TTY *quitTty=tty_table + 6;
-	quitTty->startScanf =0;
+	
 
 	while (moveTty->startScanf); 
-		strlwr(moveTty->str);
+		//strlwr(moveTty->str);
 		if (strcmp(moveTty->str,"w")==0 || strcmp(moveTty->str,"W")==0){
        			move_up();
                 	break;}
@@ -832,7 +874,7 @@ void start_game()
        			printf("Are you sure? Y/N\n");
 			openStartScanf(quitTty);
 			while (quitTty->startScanf); 
-				strlwr(quitTty->str);
+				//strlwr(quitTty->str);
 				if (strcmp(quitTty->str,"y")==0 || strcmp(quitTty->str,"Y")==0){
                				return;	
                			}
@@ -860,7 +902,7 @@ void start_game()
                 score = 0;
                 
                 while (quitTty->startScanf) {
-				strlwr(quitTty->str);
+				//strlwr(quitTty->str);
 				if (strcmp(quitTty->str,"y")==0 || strcmp(quitTty->str,"Y")==0){
                				continue;	
                			}
@@ -878,7 +920,7 @@ void start_game()
                 score = 0;
                 
                 while (quitTty->startScanf) {
-				strlwr(quitTty->str);
+				//strlwr(quitTty->str);
 				if (strcmp(quitTty->str,"y")==0 || strcmp(quitTty->str,"Y")==0){
                				continue;	
                			}
@@ -914,7 +956,6 @@ void  Game_2048()
 	start_game();
 	}
 	return ;//-0
-
 }
 
 /*======================================================================*
@@ -981,7 +1022,7 @@ void displayGameState()
 
 }
 
-int checkParameter(int x, int y)	//Œì²éÍæŒÒÊäÈëµÄ²ÎÊýÊÇ·ñÕýÈ·
+int checkParameter(int x, int y)	
 {
 	int n=15;
 	if (x<0 || y<0 || x>=n || y>=n) return 0;
@@ -989,13 +1030,13 @@ int checkParameter(int x, int y)	//Œì²éÍæŒÒÊäÈëµÄ²ÎÊýÊÇ·ñ�
 	return 1;
 }
 
-//žüÐÂµÄÎ»ÖÃÎªx£¬y£¬ÒòŽË Ö»ÒªŒì²é×ø±êÎªx£¬yµÄÎ»ÖÃ
-int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñÊ€£©
+
+int win(int x,int y)		//check winner
 {
 	int n=15;
 	int i,j;
 	int gameCount;
-	//×óÓÒÀ©Õ¹
+	
 	gameCount=1;
 	for (j=y+1; j<n; j++)
 	{
@@ -1009,7 +1050,7 @@ int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñ�
 	}
 	if (gameCount>=5) return 1;
 
-	//ÉÏÏÂÀ©Õ¹
+	
 	gameCount=1;
 	for (i=x-1; i>0; i--)
 	{
@@ -1023,7 +1064,7 @@ int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñ�
 	}
 	if (gameCount>=5) return 1;
 
-	//Õý¶ÔœÇÏßÀ©Õ¹
+	
 	gameCount=1;
 	for (i=x-1,j=y-1; i>=0 && j>=0; i--,j--)
 	{
@@ -1037,7 +1078,7 @@ int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñ�
 	}
 	if (gameCount>=5) return 1;
 
-	//žº¶ÔœÇÏßÀ©Õ¹
+	
 	gameCount=1;
 	for (i=x-1,j=y+1; i>=0 && j<n; i--,j++)
 	{
@@ -1133,18 +1174,18 @@ void free4(int x1,int y1,int x2,int y2,int *ff1,int *ff2)
 
 int getPossibleByAD(int attack,int defence,int attackFree1,int attackFree2,int defenceFree1,int defenceFree2)
 {
-	if (attack>=5) return 20;						//5¹¥»÷
-	if (defence>=5) return 19;						//5·ÀÓù
-	if (attack==4 && (attackFree1>=1 && attackFree2>=1)) return 18;		//4¹¥»÷ 2±ß
-	if (attack==4 && (attackFree1>=1 || attackFree2>=1)) return 17;		//4¹¥»÷ 1±ß
-	if (defence==4 && (defenceFree1>=1 || defenceFree2>=1)) return 16;	//4·ÀÓù
-	if (attack==3 && (attackFree1>=2 && attackFree2>=2)) return 15;		//3¹¥»÷ 2±ß
-	if (defence==3 && (defenceFree1>=2 && defenceFree2>=2)) return 14;	//3·ÀÓù 2±ß
-	if (defence==3 && (defenceFree1>=2 || defenceFree2>=2)) return 13;	//3·ÀÓù 1±ß
-	if (attack==3 && (attackFree1>=2 || attackFree2>=2)) return 12;		//3¹¥»÷ 1±ß
-	if (attack==2 && (attackFree1>=3 && attackFree2>=3)) return 11;		//2¹¥»÷ 2±ß
-	if (defence==2 && defenceFree1+defenceFree2>=3) return 10;	//2·ÀÓù 2±ß
-	if (defence==2 && defenceFree1+defenceFree2>=3) return 9;		//2·ÀÓù 1±ß
+	if (attack>=5) return 20;						
+	if (defence>=5) return 19;						
+	if (attack==4 && (attackFree1>=1 && attackFree2>=1)) return 18;		
+	if (attack==4 && (attackFree1>=1 || attackFree2>=1)) return 17;		
+	if (defence==4 && (defenceFree1>=1 || defenceFree2>=1)) return 16;	
+	if (attack==3 && (attackFree1>=2 && attackFree2>=2)) return 15;		
+	if (defence==3 && (defenceFree1>=2 && defenceFree2>=2)) return 14;	
+	if (defence==3 && (defenceFree1>=2 || defenceFree2>=2)) return 13;	
+	if (attack==3 && (attackFree1>=2 || attackFree2>=2)) return 12;		
+	if (attack==2 && (attackFree1>=3 && attackFree2>=3)) return 11;		
+	if (defence==2 && defenceFree1+defenceFree2>=3) return 10;	
+	if (defence==2 && defenceFree1+defenceFree2>=3) return 9;	
 	if (attack==1 && attackFree1+attackFree2>=4) return 8;
 	if (defence==1 && defenceFree1+defenceFree2>=4) return 7;
 	return 6;
@@ -1161,10 +1202,10 @@ int getPossible(int x,int y)
 	int defenceFree2;
 	int possible=-100;
 
-	//×óÓÒÀ©Õ¹
+	
 	int al,ar;
 	int dl,dr;
-	//ºáÏò¹¥»÷
+
 	for (al=y-1; al>=0; al--)
 	{
 		if (gameMap[x][al]!='*') break;
@@ -1173,7 +1214,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[x][ar]!='*') break;
 	}
-	//ºáÏò·ÀÊØ
+
 	for (dl=y-1; dl>=0; dl--)
 	{
 		if (gameMap[x][dl]!='o') break;
@@ -1188,7 +1229,7 @@ int getPossible(int x,int y)
 	free1(x,dl,dr,&defenceFree1,&defenceFree2);
 	possible=max(possible,getPossibleByAD(attack,defence,attackFree1,attackFree2,defenceFree1,defenceFree2));
 
-	//ÊúÏòœø¹¥
+
 	for (al=x-1; al>=0; al--)
 	{
 		if (gameMap[al][y]!='*') break;
@@ -1197,7 +1238,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[ar][y]!='*') break;
 	}
-	//ÊúÏò·ÀÊØ
+
 	for (dl=x-1; dl>=0; dl--)
 	{
 		if (gameMap[dl][y]!='o') break;
@@ -1212,7 +1253,7 @@ int getPossible(int x,int y)
 	free2(dl,dr,y,&defenceFree1,&defenceFree2);
 	possible=max(possible,getPossibleByAD(attack,defence,attackFree1,attackFree2,defenceFree1,defenceFree2));
 
-	//Õý¶ÔœÇÏßœø¹¥
+
 	int al1,al2,ar1,ar2;
 	int dl1,dl2,dr1,dr2;
 	for (al1=x-1,al2=y-1; al1>=0 && al2>=0; al1--,al2--)
@@ -1223,7 +1264,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[ar1][ar2]!='*') break;
 	}
-	//Õý¶ÔœÇÏß·ÀÊØ
+
 	for (dl1=x-1,dl2=y-1; dl1>=0 && dl2>=0; dl1--,dl2--)
 	{
 		if (gameMap[dl1][dl2]!='o') break;
@@ -1238,7 +1279,7 @@ int getPossible(int x,int y)
 	free3(dl1,dl2,dr1,dr2,&defenceFree1,&defenceFree2);
 	possible=max(possible,getPossibleByAD(attack,defence,attackFree1,attackFree1,defenceFree1,defenceFree2));
 
-	//žº¶ÔœÇÏßœø¹¥
+
 	for (al1=x-1,al2=y+1; al1>=0 && al2<n; al1--,al2++)
 	{
 		if (gameMap[al1][al2]!='*') break;
@@ -1247,7 +1288,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[ar1][ar2]!='*') break;
 	}
-	//žº¶ÔœÇÏß·ÀÊØ
+
 	for (dl1=x-1,dl2=y+1; dl1>=0 && dl2<n; dl1--,dl2++)
 	{
 		if (gameMap[dl1][dl2]!='o') break;
@@ -1295,7 +1336,7 @@ void goBangGameStart()
 		while (1)
 		{
 			printf("[player step:%d]",++playerStep);
-			//scanf("%d%d",&x,&y);
+
 			openStartScanf(goBangGameTty);
 			while (goBangGameTty->startScanf) ;
 			readTwoNumber(&x,&y);
