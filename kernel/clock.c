@@ -35,23 +35,23 @@ PUBLIC void clock_handler(int irq)
 		return;
 
 	}
-	if (p_proc_ready->whichQueue==1)	//from queue 1 to queue 2
+	if (p_proc_ready->whichQueue==1)	//如果是第一个队列的，降到第二个队列
 	{	
 		p_proc_ready->whichQueue=2;
-		p_proc_ready->ticks=4;
+		p_proc_ready->ticks=2;
 		secondQueue[secondLen]=p_proc_ready;
 		secondLen++;
 		firstHead++;
 	}
-	else if(p_proc_ready->whichQueue==2)      //from queue 2 to queue 3
+	else if(p_proc_ready->whichQueue==2)
 	{
 		p_proc_ready->whichQueue=3;
-		p_proc_ready->ticks=p_proc_ready->priority;
+		p_proc_ready->ticks=3;
 		lastQueue[lastLen]=p_proc_ready;
 		lastLen++;
 		secondHead++;
 	}
-	else					//last queue
+	else					//否则是第二个队列的
 	{
 		
 	}
@@ -80,7 +80,8 @@ PUBLIC void init_clock()
 	out_byte(TIMER0, (t_8) (TIMER_FREQ/HZ) );
 	out_byte(TIMER0, (t_8) ((TIMER_FREQ/HZ) >> 8));
 
-	put_irq_handler(CLOCK_IRQ, clock_handler);	
-	enable_irq(CLOCK_IRQ);				
+	put_irq_handler(CLOCK_IRQ, clock_handler);	/* 设定时钟中断处理程序 */
+	enable_irq(CLOCK_IRQ);				/* 让8259A可以接收时钟中断 */
 }
+
 

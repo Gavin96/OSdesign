@@ -127,7 +127,7 @@ PUBLIC int tinix_main()
 
 	//init priority
 	proc_table[0].priority = 15;
-	proc_table[1].priority =  2;
+	proc_table[1].priority =  15;
 	proc_table[2].priority =  12;
 	proc_table[3].priority =  4;
 	proc_table[4].priority =  7;
@@ -184,6 +184,7 @@ void help()
 	printf("      *****  alt+F3       --------  goBang game           *****\n");
 	printf("      *****  kill 2~5     --------  kill the process 2~5  *****\n");
 	printf("      *****  start 2~5    --------  start the process 2~5 *****\n");
+	printf("      *****  ready 2~5    --------  make the process 2~5 ready \n");
 	printf("      *****  show         --------  show the process state*****\n");
 	printf("      *********************************************************\n");
 	printf("\n");
@@ -204,10 +205,10 @@ void show()
 			printf("    Runnable      ");
 			break;
 		case kRUNNING:
-			printf("    Running    ");
+			printf("    Running       ");
 			break;
 		case kREADY:
-			printf("    Finish      ");
+			printf("    Finish        ");
 			break;
 		}
 		printf("%d\n",p->priority);
@@ -260,11 +261,12 @@ void dealWithCommand(char* command)
 		return ;
 	}
 
+
 	char str[100];
 	int i=0;
 	for(; i<100;i++)
 		str[i]=0;
-
+	printf("%s",command);
 	int number;
 	readOneStringAndOneNumber(command,str,& number);
 	if (strcmp(str,"start")==0)
@@ -313,7 +315,29 @@ void dealWithCommand(char* command)
 		}
 		return ;
 	}
-
+	if (strcmp(str,"ready")==0)
+	{
+		char* state;
+		state= (char *)proc_table[number].state;
+		if(strcmp(state,"kREADY")==0)
+		{
+			printf("The process hasn't finish\n");
+		}
+		else if (number<0 || number>NR_TASKS+NR_PROCS)
+		{
+			printf("No found this process!!\n");
+		}
+		else if (number==0 || number==6)
+		{
+			printf("You do not have sufficient privileges\n");
+		}
+		else if (2<=number && number <=5)
+		{
+			proc_table[number].state=kRUNNABLE;
+			printf("make process %d ready\n",number);
+		}
+		return ;
+	}
 	printf("%s", str);
 	printf("can not find this command\n");
 }
@@ -860,8 +884,12 @@ void start_game()
 void TestE()
 {
 
-	start_game();
-    	return ;//-0
+	int i = 0;
+		while(1){
+			printf("4   ");
+			milli_delay(1000);
+		}
+
 
 }
 
