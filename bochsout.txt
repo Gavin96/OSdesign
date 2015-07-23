@@ -30,7 +30,13 @@
 00000000000i[     ]   SB16 support: yes
 00000000000i[     ]   USB support: yes
 00000000000i[     ]   VGA extension support: vbe 
+<<<<<<< HEAD
 00000000000i[MEM0 ] allocated memory at 0xb426e008. after alignment, vector=0xb426f000
+=======
+
+00000000000i[MEM0 ] allocated memory at 0xb4303008. after alignment, vector=0xb4304000
+
+>>>>>>> 87f2d4d4dcdc9731eb1de59727399a72564ee3be
 00000000000i[MEM0 ] 32.00MB
 00000000000i[MEM0 ] mem block size = 0x00100000, blocks=32
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/home/pisces/bochs-2.4.5/bios/BIOS-bochs-latest')
@@ -82,7 +88,15 @@
 00000000000i[     ] lt_dlhandle is 0x9431dd8
 00000000000i[PLGIN] loaded plugin libbx_parallel.so
 00000000000i[CMOS ] Using local time for initial clock
+<<<<<<< HEAD
 00000000000i[CMOS ] Setting initial clock to: Wed Jul 22 23:27:36 2015 (time0=1437632856)
+=======
+<<<<<<< HEAD
+00000000000i[CMOS ] Setting initial clock to: Wed Jul 22 16:50:41 2015 (time0=1437609041)
+=======
+00000000000i[CMOS ] Setting initial clock to: Wed Jul 22 09:31:52 2015 (time0=1437582712)
+>>>>>>> 7c092bc458f6b4a0c1669749d39380ca2b19ff5b
+>>>>>>> 87f2d4d4dcdc9731eb1de59727399a72564ee3be
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[DMA  ] channel 2 used by Floppy Drive
 00000000000i[FDD  ] fd0: 'TINIX.IMG' ro=0, h=2,t=80,spt=18
@@ -156,6 +170,44 @@
 00000000000i[PLGIN] reset of 'serial' plugin device by virtual method
 00000000000i[PLGIN] reset of 'parallel' plugin device by virtual method
 00000003305i[BIOS ] $Revision: 1.247 $ $Date: 2010/04/04 19:33:50 $
+<<<<<<< HEAD
+00000318057i[KBD  ] reset-disable command received
+00000447887i[VBIOS] VGABios $Id: vgabios.c,v 1.75 2011/10/15 14:07:21 vruppert Exp $
+00000447958i[VGA  ] VBE known Display Interface b0c0
+00000447990i[VGA  ] VBE known Display Interface b0c5
+00000450915i[VBIOS] VBE Bios $Id: vbe.c,v 1.64 2011/07/19 18:25:05 vruppert Exp $
+00000600000i[XGUI ] charmap update. Font Height is 16
+00000771115i[BIOS ] Starting rombios32
+00000771612i[BIOS ] Shutdown flag 0
+00000772293i[BIOS ] ram_size=0x02000000
+00000772771i[BIOS ] ram_end=32MB
+00000813367i[BIOS ] Found 1 cpu(s)
+00000832636i[BIOS ] bios_table_addr: 0x000fbc18 end=0x000fcc00
+00000845313i[BIOS ] bios_table_cur_addr: 0x000fbc18
+00012943037i[BIOS ] Booting from 0000:7c00
+00677958564i[     ] Ctrl-C detected in signal handler.
+00677958565i[     ] dbg: Quit
+00677958565i[CPU0 ] CPU is in protected mode (active)
+00677958565i[CPU0 ] CS.d_b = 32 bit
+00677958565i[CPU0 ] SS.d_b = 32 bit
+00677958565i[CPU0 ] | EAX=00072a48  EBX=000680fc  ECX=00000004  EDX=00000000
+00677958565i[CPU0 ] | ESP=00038090  EBP=000380a0  ESI=000729c4  EDI=00000000
+00677958565i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf SF zf af PF cf
+00677958565i[CPU0 ] | SEG selector     base    limit G D
+00677958565i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+00677958565i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00677958565i[CPU0 ] |  GS:001b( 0003| 0|  3) 000b8000 0000ffff 0 0
+00677958565i[CPU0 ] | EIP=0003345a (0003345a)
+00677958565i[CPU0 ] | CR0=0xe0000011 CR2=0x00000000
+00677958565i[CPU0 ] | CR3=0x00200000 CR4=0x00000000
+00677958565i[CMOS ] Last time is 1437609210 (Wed Jul 22 16:53:30 2015)
+00677958565i[XGUI ] Exit
+00677958565i[CTRL ] quit_sim called with exit code 0
+=======
 00000318042i[KBD  ] reset-disable command received
 00000444800i[VBIOS] VGABios $Id: vgabios.c,v 1.69 2009/04/07 18:18:20 vruppert Exp $
 00000444871i[VGA  ] VBE known Display Interface b0c0
@@ -196,6 +248,7 @@
 00001851282i[PCI  ] 440FX PMC write to PAM register 59 (TLB Flush)
 00001852126i[BIOS ] bios_table_cur_addr: 0x000fbe44
 00014041550i[BIOS ] Booting from 0000:7c00
+<<<<<<< HEAD
 00688200000p[SDL  ] >>PANIC<< User requested shutdown.
 00688200000i[CPU0 ] CPU is in protected mode (active)
 00688200000i[CPU0 ] CS.d_b = 32 bit
@@ -227,3 +280,37 @@
 00688200000i[CMOS ] Last time is 1437633028 (Wed Jul 22 23:30:28 2015)
 00688200000i[     ] restoring default signal behavior
 00688200000i[CTRL ] quit_sim called with exit code 1
+=======
+01622180000p[SDL  ] >>PANIC<< User requested shutdown.
+01622180000i[CPU0 ] CPU is in protected mode (active)
+01622180000i[CPU0 ] CS.d_b = 32 bit
+01622180000i[CPU0 ] SS.d_b = 32 bit
+01622180000i[CPU0 ] EFER   = 0x00000000
+01622180000i[CPU0 ] | RAX=0000000000006590  RBX=00000000000613dc
+01622180000i[CPU0 ] | RCX=0000000000006590  RDX=0000000000000104
+01622180000i[CPU0 ] | RSP=00000000000614d4  RBP=00000000000614ec
+01622180000i[CPU0 ] | RSI=0000000000035f1c  RDI=0000000000000000
+01622180000i[CPU0 ] |  R8=0000000000000000   R9=0000000000000000
+01622180000i[CPU0 ] | R10=0000000000000000  R11=0000000000000000
+01622180000i[CPU0 ] | R12=0000000000000000  R13=0000000000000000
+01622180000i[CPU0 ] | R14=0000000000000000  R15=0000000000000000
+01622180000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf zf af pf cf
+01622180000i[CPU0 ] | SEG selector     base    limit G D
+01622180000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+01622180000i[CPU0 ] |  CS:0007( 0000| 1|  3) 00000000 ffffffff 1 1
+01622180000i[CPU0 ] |  DS:000f( 0001| 1|  3) 00000000 ffffffff 1 1
+01622180000i[CPU0 ] |  SS:000f( 0001| 1|  3) 00000000 ffffffff 1 1
+01622180000i[CPU0 ] |  ES:000f( 0001| 1|  3) 00000000 ffffffff 1 1
+01622180000i[CPU0 ] |  FS:000f( 0001| 1|  3) 00000000 ffffffff 1 1
+01622180000i[CPU0 ] |  GS:001b( 0003| 0|  3) 000b8000 0000ffff 0 0
+01622180000i[CPU0 ] |  MSR_FS_BASE:0000000000000000
+01622180000i[CPU0 ] |  MSR_GS_BASE:00000000000b8000
+01622180000i[CPU0 ] | RIP=000000000003388d (000000000003388d)
+01622180000i[CPU0 ] | CR0=0xe0000011 CR2=0x0000000000000000
+01622180000i[CPU0 ] | CR3=0x00200000 CR4=0x00000000
+01622180000i[CPU0 ] 0x000000000003388d>> sar eax, 0x1f : C1F81F
+01622180000i[CMOS ] Last time is 1437583117 (Wed Jul 22 09:38:37 2015)
+01622180000i[     ] restoring default signal behavior
+01622180000i[CTRL ] quit_sim called with exit code 1
+>>>>>>> 7c092bc458f6b4a0c1669749d39380ca2b19ff5b
+>>>>>>> 87f2d4d4dcdc9731eb1de59727399a72564ee3be
