@@ -35,6 +35,7 @@ PUBLIC void 	TestD();
 PUBLIC void 	TestE();
 PUBLIC void  	clearScreen();
 PUBLIC void 	goBangGameStart();
+PUBLIC void     Game_2048();
 
 /* i8259.c */
 PUBLIC void	put_irq_handler(int iIRQ, t_pf_irq_handler handler);

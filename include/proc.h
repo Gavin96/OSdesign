@@ -61,7 +61,7 @@ typedef struct s_task {
 
 /* Number of tasks & processes */
 #define NR_TASKS		1
-#define NR_PROCS		6
+#define NR_PROCS		7
 
 
 /* stacks of tasks */
@@ -72,6 +72,7 @@ typedef struct s_task {
 #define STACK_SIZE_TESTD	0x8000
 #define STACK_SIZE_TESTE	0x8000
 #define STACK_SIZE_GOBANGGAMESTART   0x8000
+#define STACK_SIZE_GAME2048    0x8000
 
 #define STACK_SIZE_TOTAL	(STACK_SIZE_TTY + \
 				STACK_SIZE_TERMINAL + \
@@ -79,5 +80,6 @@ typedef struct s_task {
 				STACK_SIZE_TESTC + \
 				STACK_SIZE_TESTD + \
 				STACK_SIZE_TESTE + \
-				STACK_SIZE_GOBANGGAMESTART)
+				STACK_SIZE_GOBANGGAMESTART + \
+				STACK_SIZE_GAME2048)
 

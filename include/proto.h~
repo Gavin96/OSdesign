@@ -28,9 +28,11 @@ PUBLIC char *	itoa(char * str, int num);
 PUBLIC void	restart();
 
 /* main.c */
-PUBLIC void	TestA();
+PUBLIC void	Terminal();
 PUBLIC void	TestB();
 PUBLIC void	TestC();
+PUBLIC void 	TestD();
+PUBLIC void 	TestE();
 PUBLIC void  	clearScreen();
 PUBLIC void 	goBangGameStart();
 

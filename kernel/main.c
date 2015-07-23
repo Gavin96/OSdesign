@@ -2,7 +2,7 @@
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                             main.c
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                                                    Forrest Yu, 2005
+         1352911 Jasmine 1352913 Picses 1352873 Gavin      2015.7               
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 #include "type.h"
@@ -68,15 +68,15 @@ void addToQueue(PROCESS* p)
  *======================================================================*/
 PUBLIC int tinix_main()
 {
-	//disp_str("-----\"tinix_main\" begins-----\n");
+	//beginning display
 	clearScreen();
-	disp_str("*************************************************************\n");
-	disp_str("**********               TINIX v1.0.1              **********\n");
-	disp_str("*********  1352911 Jasmine 1352913 Picses 1352873 Gavin  ********\n");
-	disp_str("**********   Welcome to Our Operating System ^_^   **********\n");
-	disp_str("                                                             \n");
-	disp_str("******* You Can Input HELP First to Know Our System  *********\n");
-	disp_str("*************************************************************\n");
+	disp_color_str("*************************************************************\n", 0x3);
+	disp_color_str("**********               TINIX v1.0.1              **********\n", 0x3);
+	disp_color_str("*********  1352911 Jasmine 1352913 Picses 1352873 Gavin  ********\n", 0x3);
+	disp_color_str("**********   Welcome to Our Operating System ^_^   **********\n", 0x3);
+	disp_color_str("                                                             \n", 0x3);
+	disp_color_str("******* You Can Input HELP First to Know Our System  *********\n", 0x3);
+	disp_color_str("*************************************************************\n", 0x3);
 	TASK*		p_task;
 	PROCESS*	p_proc		= proc_table;
 	char*		p_task_stack	= task_stack + STACK_SIZE_TOTAL;
@@ -133,6 +133,7 @@ PUBLIC int tinix_main()
 	proc_table[4].priority =  7;
 	proc_table[5].priority =  12;
 	proc_table[6].priority =  10;
+	proc_table[7].priority = 20;
 
 	//init queue
 	firstLen=firstHead=secondLen=lastLen=0;
@@ -147,6 +148,7 @@ PUBLIC int tinix_main()
 	proc_table[4].nr_tty = 1;
 	proc_table[5].nr_tty = 2;
 	proc_table[6].nr_tty = 3;
+	proc_table[7].nr_tty = 4;
 
 	k_reenter	= 0;
 	ticks		= 0;
@@ -389,6 +391,22 @@ void TestD()
 }
 
 
+void TestE()
+{
+	char* state;
+	state= (char *)proc_table[5].state;
+	if(strcmp(state,"kREADY")!=0)
+	{
+		int i = 0;
+		while(1){
+			printf("5   ");
+			milli_delay(1000);
+		}
+
+	}
+}
+
+
 
 
 /*======================================================================*
@@ -457,12 +475,14 @@ void refresh_show(void)
 {
     int i =0, j =0;
     //clearScreen();
+    sys_clear(tty_table+4);
     printf("\n\n");
     printf("    GAME: 2048\n");
     //printf(" SCORE        \n");
     //printf("  %d        \n", score);
     line();
     printf("\n");
+	
     for(i =0; i <4; i++)
     {
         for(j =0; j <4; j++)
@@ -748,12 +768,13 @@ void start_game()
     int judge = 0;
    // char quit =0;
    // char move =0;
-	TTY *moveTty=tty_table;
+	TTY *moveTty=tty_table + 4;
 	moveTty->startScanf =0;
 	
 	
-	TTY *quitTty=tty_table;
+	TTY *quitTty=tty_table + 4;
 	quitTty->startScanf =0;
+	
 	
 	
     while(1)
@@ -761,8 +782,13 @@ void start_game()
         add_number();
         refresh_show();
         assign();          //记录数组，对比可知操作后数字是否有移动
-        openStartScanf(moveTty);
+	printf("input operation:");  
+	//TTY *moveTty=tty_table + 6;
+	//moveTty->startScanf =0;      
+	openStartScanf(moveTty);
 	
+	TTY *quitTty=tty_table + 6;
+	quitTty->startScanf =0;
 
 	while (moveTty->startScanf); 
 		strlwr(moveTty->str);
@@ -857,10 +883,13 @@ void start_game()
     return 0;
 }*/
 
-void TestE()
+void  Game_2048()
 {
+	
+	while(1){	
 	start_game();
-    	return ;//-0
+	}
+	return ;//-0
 }
 
 /*======================================================================*
