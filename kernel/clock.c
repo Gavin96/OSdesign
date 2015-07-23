@@ -67,7 +67,13 @@ PUBLIC void milli_delay(int milli_sec)
 {
 	int t = get_ticks();
 
-	while(((get_ticks() - t) * 1000 / HZ) < milli_sec) {}
+	//while(((get_ticks() - t) * 1000 / HZ) < milli_sec) {}
+        int i=0;
+        while(i<milli_sec*300000)
+        {
+              i++;
+         }
+	return;
 }
 
 /*======================================================================*
