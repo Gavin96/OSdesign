@@ -6,7 +6,7 @@
 ; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-%include "/home/caopeng/Tinix-master/include/sconst.inc"
+%include "/home/gavin/Tinix-master/include/sconst.inc"
 
 ; µ¼Èëº¯Êý
 extern	cstart

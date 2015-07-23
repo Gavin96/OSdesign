@@ -14,7 +14,6 @@
 #include "console.h"
 #include "global.h"
 #include "proto.h"
-#include "headfile.h"
 
 int strcmp(char *str1,char *str2)
 {
@@ -68,8 +67,9 @@ void addToQueue(PROCESS* p)
  *======================================================================*/
 PUBLIC int tinix_main()
 {
-	//beginning display
+	//disp_str("-----\"tinix_main\" begins-----\n");
 	clearScreen();
+<<<<<<< HEAD
 	disp_color_str("*************************************************************\n", 0x3);
 	disp_color_str("**********               UTOPIA v1.0.1              **********\n", 0x3);
 	disp_color_str("*********  1352911 Jasmine 1352913 Picses 1352873 Gavin  ********\n", 0x3);
@@ -77,6 +77,12 @@ PUBLIC int tinix_main()
 	disp_color_str("                                                             \n", 0x3);
 	disp_color_str("******* You Can Input HELP First to Know Our System  *********\n", 0x3);
 	disp_color_str("*************************************************************\n", 0x3);
+=======
+        //displayWelcome();
+	milli_delay(1);
+	DisPlayOpen();
+
+>>>>>>> 89b52efc7ee542456b49ce07d815d225fd92e21d
 	TASK*		p_task;
 	PROCESS*	p_proc		= proc_table;
 	char*		p_task_stack	= task_stack + STACK_SIZE_TOTAL;
@@ -86,13 +92,21 @@ PUBLIC int tinix_main()
 	t_8		rpl;
 	int		eflags;
 	for(i=0;i<NR_TASKS+NR_PROCS;i++){
+<<<<<<< HEAD
 		if (i < NR_TASKS) {	/* task table */
+=======
+		if (i < NR_TASKS) {	/* 脠脦脦帽 */
+>>>>>>> 89b52efc7ee542456b49ce07d815d225fd92e21d
 			p_task		= task_table + i;
 			privilege	= PRIVILEGE_TASK;
 			rpl		= RPL_TASK;
 			eflags		= 0x1202;	/* IF=1, IOPL=1, bit 2 is always 1 */
 		}
+<<<<<<< HEAD
 		else {			/* process table */
+=======
+		else {			/* 脫脙禄搂艙酶鲁脤 */
+>>>>>>> 89b52efc7ee542456b49ce07d815d225fd92e21d
 			p_task		= user_proc_table + (i - NR_TASKS);
 			privilege	= PRIVILEGE_USER;
 			rpl		= RPL_USER;
@@ -133,7 +147,6 @@ PUBLIC int tinix_main()
 	proc_table[4].priority =  7;
 	proc_table[5].priority =  12;
 	proc_table[6].priority =  10;
-	proc_table[7].priority = 20;
 
 	//init queue
 	firstLen=firstHead=secondLen=lastLen=0;
@@ -146,9 +159,8 @@ PUBLIC int tinix_main()
 	proc_table[2].nr_tty = 1;
 	proc_table[3].nr_tty = 1;
 	proc_table[4].nr_tty = 1;
-	proc_table[5].nr_tty = 2;
-	proc_table[6].nr_tty = 3;
-	proc_table[7].nr_tty = 4;
+	proc_table[5].nr_tty = 1;
+	proc_table[6].nr_tty = 2;
 
 	k_reenter	= 0;
 	ticks		= 0;
@@ -177,7 +189,8 @@ void clearScreen()
 void help()
 {
 	printf("           ***********************************************\n");
-	printf("                          Welcome to Utopia OS System ^_^ \n");
+	printf("                          Welcome to Utopia Operating System ^_^ \n");
+
 	printf("           ***********************************************\n");
 	printf("\n");
 	printf("      *****  help         --------  show the help menu    *****\n");
@@ -186,9 +199,10 @@ void help()
 	printf("      *****  fn+F5       --------  2048 game           *****\n");
 	printf("      *****  kill 2~5     --------  kill the process 2~5  *****\n");
 	printf("      *****  start 2~5    --------  start the process 2~5 *****\n");
-	printf("      *****  ready 2~5    --------  make the process 2~5 ready \n");
 	printf("      *****  show         --------  show the process state*****\n");
+
 	printf("      *****  chat         --------  chat with me (@-@) *****\n");
+        printf("      *****  quit         --------  quit our System       *****\n");
 	printf("      *********************************************************\n");
 	printf("\n");
 }
@@ -306,6 +320,11 @@ void dealWithCommand(char* command)
 		chat();
 		return ;
 	}
+        if (strcmp(command,"quit")==0)
+        {
+                quit();
+                while(1);
+        }
 
 	char str[100];
 	int i=0;
@@ -360,29 +379,7 @@ void dealWithCommand(char* command)
 		}
 		return ;
 	}
-	if (strcmp(str,"ready")==0)
-	{
-		char* state;
-		state= (char *)proc_table[number].state;
-		if(strcmp(state,"kREADY")==0)
-		{
-			printf("The process hasn't finish\n");
-		}
-		else if (number<0 || number>NR_TASKS+NR_PROCS)
-		{
-			printf("No found this process!!\n");
-		}
-		else if (number==0 || number==6)
-		{
-			printf("You do not have sufficient privileges\n");
-		}
-		else if (2<=number && number <=5)
-		{
-			proc_table[number].state=kRUNNABLE;
-			printf("make process %d ready\n",number);
-		}
-		return ;
-	}
+
 	printf("%s", str);
 	printf("%s", str);
 	printf("can not find this command\n");
@@ -458,7 +455,6 @@ void TestD()
 	}
 }
 
-
 void TestE()
 {
 	char* state;
@@ -473,366 +469,43 @@ void TestE()
 
 	}
 }
-
-
-
-
 /*======================================================================*
-                               2048
- *======================================================================*/
-
-int same[SIZE][SIZE]= {};
-
-void line(void)
+				quit 
+*=======================================================================*/
+void quit()
 {
-    int i = 0;
-    for (i =0; i <SIZE; i++)
-    {
-        printf("-----");
-    }
+clearScreen();
+       //milli_delay(2);
+       disp_str("\n");
+       disp_str("\n");
+       disp_str("\n");
+       disp_str("\n");
+       disp_str("\n");
+
+
+
+//disp_color_str("ssssssss\n",0x0A);
+//disp_color_str("ssssssss\n",0x0B);
+//disp_color_str("s s s s s s s s\n",0x1B);
+//disp_color_str("s s s ss sss\n",0x1A);
+//disp_color_str("s s s ss sss\n",0xA1);
+//disp_color_str("s s s ss sss\n",0xA1);
+//disp_color_str("ssssssss\n",0x8A);
+//disp_color_str("ssssssss\n",0x8B);
+//disp_color_str("ssssssss\n",0x9A);
+//disp_color_str("ssssssss\n",0x08);
+       disp_str("           ");
+       disp_color_str("  OOOO   OOOO   OOOO       OO    OO   OO   O   O\n",0x8C);
+       disp_str("           ");
+       disp_color_str(" OO      O      O           O   O    O  O  O   O\n",0x8B);
+       disp_str("           ");
+       disp_color_str("  OOOO   OOOO   OOOO          OO     O  O  O   O\n",0x8A);
+       disp_str("           ");
+       disp_color_str("    OO   O      O             OO     O  O  O   O\n",0x8D);
+       disp_str("           ");
+       disp_color_str(" OOOO    OOOO   OOOO          OO      OO   OOOOO\n",0x8E);
 }
 
-
-void set_number(int row, int vol)
-{
-    switch(arr[row][vol])
-    {
-        case 0:
-            printf("|[0]");
-            break;
-        case 2:
-            printf("|[2]");
-            break;
-        case 4:
-            printf("|[4]");
-            break;
-        case 8:
-            printf("|[8]");
-            break;
-        case 16:
-            printf("|[16]");
-            break;
-        case 32:
-            printf("|[32]");
-            break;
-        case 64:
-            printf("|[64]");
-            break;
-        case 128:
-            printf("|[128]");
-            break;
-        case 256:
-            printf("|[256]");
-            break;
-        case 512:
-            printf("|[512]");
-            break;
-        case 1024:
-            printf("|[1024]");
-            break;
-        case 2048:
-            printf("|[2048]");
-            break;
-        default:
-            break;
-    }
-}
-
-
-void refresh_show(void)
-{
-    int i =0, j =0;
-    //clearScreen();
-    sys_clear(tty_table+4);
-    printf("\n\n");
-    printf("    GAME: 2048\n");
-    //printf(" SCORE        \n");
-    //printf("  %d        \n", score);
-    line();
-    printf("\n");
-	
-    for(i =0; i <4; i++)
-    {
-        for(j =0; j <4; j++)
-        {
-            set_number(i, j);
-	    printf("|  ");
-        }
-        
-        printf("\n");
-        line();
-        printf("\n");
-    }
-    printf("Q(exit)   R(restart_2048)\n");
-}
-
-void move_up(void)
-{
-    int i =0, j =0;		//	循环变量
-    int point = 0;		//	定位作用
-    
-    for (i =0; i <SIZE; i++)
-    {
-        point = 0;
-        for(j =1; j <SIZE; j++)
-        {
-            //如果没这个if，则要在两者相等处做个同为O的分支
-            if (arr[j][i] > 0)
-            {
-                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
-                if (arr[point][i] == arr[j][i])
-                {
-                    arr[point][i] *= 2;
-                    score += arr[point][i];
-                    arr[j][i] = 0;
-                    point++;
-                }
-                else if(arr[point][i] == 0)
-                {
-                    arr[point][i] = arr[j][i];
-                    arr[j][i] = 0;
-                }
-                else
-                {
-                    arr[++point][i] = arr[j][i];
-                    if (point != j)
-                    {
-                        arr[j][i] = 0;
-                    }
-                }
-            }
-            
-        }
-    }
-}
-
-void move_down(void)
-{
-    int i =0, j =0;		//	循环变量
-    int point = 0;		//	定位作用
-    
-    for (i =0; i <SIZE; i++)
-    {
-        point = SIZE-1;
-        for(j =SIZE-2; j >=0; j--)
-        {
-            //如果没这个if，则要在两者相等处做个同为O的分支
-            if (arr[j][i] > 0)
-            {
-                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
-                if (arr[point][i] == arr[j][i])
-                {
-                    arr[point][i] *= 2;
-                    score += arr[point][i];
-                    arr[j][i] = 0;
-                    point--;
-                }
-                else if(arr[point][i] == 0)
-                {
-                    arr[point][i] = arr[j][i];
-                    arr[j][i] = 0;
-                }
-                else
-                {
-                    arr[--point][i] = arr[j][i];
-                    if (point != j)
-                    {
-                        arr[j][i] = 0;
-                    }
-                }
-            }
-            
-        }
-    }
-}
-
-void move_left(void)
-{
-    int i =0, j =0;		//	循环变量
-    int point = 0;		//	定位作用
-    
-    for (i =0; i <SIZE; i++)
-    {
-        point = 0;
-        for(j =1; j <SIZE; j++)
-        {
-            //如果没这个if，则要在两者相等处做个同为O的分支
-            if (arr[i][j] > 0)
-            {
-                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
-                if (arr[i][point] == arr[i][j])
-                {
-                    arr[i][point] *= 2;
-                    score += arr[i][point];
-                    arr[i][j] = 0;
-                    point++;
-                }
-                else if(arr[i][point] == 0)
-                {
-                    arr[i][point] = arr[i][j];
-                    arr[i][j] = 0;
-                }
-                else
-                {
-                    arr[i][++point] = arr[i][j];
-                    if (point != j)
-                    {
-                        arr[i][j] = 0;
-                    }
-                }
-            }
-            
-        }
-    }
-}
-
-void move_right(void)
-{
-    int i =0, j =0;		//	循环变量
-    int point = 0;		//	定位作用
-    
-    for (i =0; i <SIZE; i++)
-    {
-        point = SIZE-1;
-        for(j =SIZE-2; j >=0; j--)
-        {
-            //如果没这个if，则要在两者相等处做个同为O的分支
-            if (arr[i][j] > 0)
-            {
-                // 定位点要不为0,不为0则有可能与对比数相等或不相等`
-                if (arr[i][point] == arr[i][j])
-                {
-                    arr[i][point] *= 2;
-                    score += arr[i][point];
-                    arr[i][j] = 0;
-                    point--;
-                }
-                else if(arr[i][point] == 0)
-                {
-                    arr[i][point] = arr[i][j];
-                    arr[i][j] = 0;
-                }
-                else
-                {
-                    arr[i][--point] = arr[i][j];
-                    if (point != j)
-                    {
-                        arr[i][j] = 0;
-                    }
-                }
-            }
-            
-        }
-    }
-}
-
-int game_judge(void)
-{
-    int i = 0, j = 0;
-    // 判断是否胜利
-    for (i =0; i <SIZE; i++)
-        for(j =0; j <SIZE; j++)
-        {
-            if (arr[i][j] == 2048)
-            {
-                return 2;
-            }
-        }
-    //判断是否有空格，有则继续
-    for (i =0; i <SIZE; i++)
-        for(j =0; j <SIZE; j++)
-        {
-            if(arr[i][j] == 0)
-            {
-                return 1;
-            }
-        }
-    //判断是否相邻有重复，有则游戏继续
-    for (i =0; i <SIZE; i++)
-        for(j =0; j <SIZE-1; j++)
-        {
-            if ((arr[i][j] == arr[i][j+1]) || (arr[j][i] == arr[j+1][i]))
-            {
-                return 1;
-            }
-        }
-    
-    //没地可走，则game over
-    return 0;
-}
-
-void add_number(void)
-{
-    int num = 10 % 3 ? 2 : 4;	// 生成2的概率是4的2倍
-    int un[SIZE * SIZE] = {};		// 记录没有被占据的位置
-    int i = 0, j =0, cnt = 0;
-    int loc = 0;
-    for (i =0; i <SIZE; i++)
-        for (j =0; j <SIZE; j++)
-        {
-            //if (arr[i][j] == 0 && loc-- == 0 )
-            if (arr[i][j] == 0)
-            {
-                un[cnt] = i * 10 + j;
-                cnt++;
-            }
-        }
-    loc = 20 % ++cnt;				//随机挑选未被占据的位置
-    
-    // 复原数组存放数字对应的序列
-    i = un[loc] / 10;
-    j = un[loc] % 10;
-    arr[i][j] = num;
-
-}
-
-void restart_2048(void)
-{
-    int i = 0, j = 0;
-    int row = 0, vol = 0;
-    for (i =0; i <SIZE; i++)
-        for(j =0; j <SIZE; j++)
-        {
-            arr[i][j] = 0;
-        }
-    row = 35 % SIZE;
-    vol = 23 % SIZE;
-    arr[row][vol] = 2;
-    add_number();
-}
-
-void assign(void)
-{
-    int i =0, j =0;
-    
-    for (i =0; i <SIZE; i++)
-        for (j =0; j <SIZE; j++)
-        {
-            same[i][j] = arr[i][j];
-        }
-}
-
-int same_judge()
-{
-    int i = 0, j =0;
-    
-    for (i =0; i <SIZE; i++)
-        for (j =0; j <SIZE; j++)
-        {
-            if (same[i][j] != arr[i][j])
-            {
-                return 0;
-            }
-        }
-    return 1;
-}
-
-
-
-
-
-void start_game()
-{
     int judge = 0;
    // char quit =0;
    // char move =0;
@@ -957,6 +630,7 @@ void  Game_2048()
 	}
 	return ;//-0
 }
+       
 
 /*======================================================================*
 				goBangGame
@@ -1023,6 +697,7 @@ void displayGameState()
 }
 
 int checkParameter(int x, int y)	
+
 {
 	int n=15;
 	if (x<0 || y<0 || x>=n || y>=n) return 0;
@@ -1032,11 +707,12 @@ int checkParameter(int x, int y)
 
 
 int win(int x,int y)		//check winner
+
 {
 	int n=15;
 	int i,j;
 	int gameCount;
-	
+
 	gameCount=1;
 	for (j=y+1; j<n; j++)
 	{
@@ -1050,7 +726,7 @@ int win(int x,int y)		//check winner
 	}
 	if (gameCount>=5) return 1;
 
-	
+
 	gameCount=1;
 	for (i=x-1; i>0; i--)
 	{
@@ -1064,7 +740,7 @@ int win(int x,int y)		//check winner
 	}
 	if (gameCount>=5) return 1;
 
-	
+
 	gameCount=1;
 	for (i=x-1,j=y-1; i>=0 && j>=0; i--,j--)
 	{
@@ -1078,7 +754,6 @@ int win(int x,int y)		//check winner
 	}
 	if (gameCount>=5) return 1;
 
-	
 	gameCount=1;
 	for (i=x-1,j=y+1; i>=0 && j<n; i--,j++)
 	{
@@ -1186,6 +861,7 @@ int getPossibleByAD(int attack,int defence,int attackFree1,int attackFree2,int d
 	if (attack==2 && (attackFree1>=3 && attackFree2>=3)) return 11;		
 	if (defence==2 && defenceFree1+defenceFree2>=3) return 10;	
 	if (defence==2 && defenceFree1+defenceFree2>=3) return 9;	
+
 	if (attack==1 && attackFree1+attackFree2>=4) return 8;
 	if (defence==1 && defenceFree1+defenceFree2>=4) return 7;
 	return 6;
@@ -1205,6 +881,7 @@ int getPossible(int x,int y)
 	
 	int al,ar;
 	int dl,dr;
+
 
 	for (al=y-1; al>=0; al--)
 	{
@@ -1264,7 +941,6 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[ar1][ar2]!='*') break;
 	}
-
 	for (dl1=x-1,dl2=y-1; dl1>=0 && dl2>=0; dl1--,dl2--)
 	{
 		if (gameMap[dl1][dl2]!='o') break;
@@ -1385,3 +1061,533 @@ void goBangGameStart()
 
 }
 
+
+
+
+
+
+
+/*======================================================================*
+				animation
+*=======================================================================*/
+
+void DisPlayOpen()//开机动画
+{
+	int color = 0x7f;
+
+	
+	clearScreen();
+
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_str("\n");
+	disp_str("\n");
+	disp_str("\n");
+	disp_str("\n");
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q======================Q\n");
+	
+	milli_delay(2);
+	
+	disp_str("sss");
+	
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q======================Q\n");
+
+	milli_delay(8);
+	
+
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+	disp_str("             Q======================Q\n");
+	milli_delay(2);
+	
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+	disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+        disp_str("             Q======================Q\n");
+	milli_delay(2);
+
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+	disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+        disp_str("             Q======================Q\n");
+	milli_delay(2);
+	
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+	disp_str("             Q======================Q\n");
+	milli_delay(2);
+
+
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q======================Q\n");
+	milli_delay(2);
+
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q======================Q\n");
+	milli_delay(2);
+
+
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+
+	disp_str("             Q                      Q\n");
+	disp_str("             Q                      Q\n");
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q======================Q\n");
+	milli_delay(2);
+	
+
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3);
+	disp_str("             Q                      Q\n");
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+	disp_str("             Q======================Q\n");
+	milli_delay(3);
+	
+
+
+
+	clearScreen();
+	disp_str("      HHHHHHHHHHHHH\n");
+	disp_str("      HHHH     HHHH\n");
+	disp_str("         H     H\n");
+	disp_str("         H     H\n");
+	disp_str("HHHHHHHHH       HHHHHHHHHH\n");
+	disp_str("$                          H\n");
+	disp_str("$                           H\n");
+	disp_str("HHHHHHHHH       HHHH         H\n");
+	disp_str("         W     W    H        H\n");
+	disp_str("          WWWWW     H        H\n");
+	disp_str("                    HHHHHHHHHH\n");
+	disp_color_str("                        AA\n",0x3);
+	disp_color_str("                       AAAA\n",0x3);
+	disp_color_str("                     AAAAAAAA\n",0x3);
+	disp_color_str("                    AAAAAAAAAA\n",0x3); 
+	disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+ 
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+
+        disp_str("             Q");
+	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
+        disp_str("Q\n");
+	disp_str("             Q======================Q\n");
+	
+	
+
+        //milli_delay(2);
+
+        //disp_str("\n");
+       // disp_str("\n");
+       // disp_str("\n");
+        //disp_str("\n");
+        //disp_str("\n");
+        //disp_str("\n");
+	
+	displayWelcome();
+}
+
+void displayWelcome()
+{
+        clearScreen();
+        disp_str("\n");
+        disp_str("\n");
+        disp_str("\n");
+        disp_str("\n");
+        disp_str("\n");
+        disp_str("\n");
+        disp_color_str("ww      ww   eeeeee   ll          cccc       oo       mm    mm   eeeeee\n",0x4);
+        disp_color_str(" w      w    ee       ll       cc         oo   oo     m m  m m   ee\n",0x4);
+        disp_color_str(" w  ww  w    eeeeee   ll       cc         oo   oo     m  m   m   eeeeee\n",0x4);
+        disp_color_str(" w  w  w     ee       ll       cc         oo   oo     m  m   m   ee\n",0x4);
+        disp_color_str("  w   w      eeeeee   llllllll    cccc       oo       m      m   eeeeee\n",0x4);
+        milli_delay(2);
+	
+        clearScreen();
+
+	disp_str("     ******************************************************************\n");
+	disp_str("     ************               TINIX v1.0.1              *************\n");
+	disp_str("     *********  1352911 Jasmine 1352913 Picses 1352873 Gavin  *********\n");
+	disp_str("     ************   Welcome to Our Operating System ^_^   *************\n");
+	disp_str("                                                             \n");
+	disp_str("     ********* You Can Input HELP First to Know Our System  ***********\n");
+	disp_str("     ******************************************************************\n");
+}

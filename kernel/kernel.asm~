@@ -6,7 +6,7 @@
 ; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-%include "/home/pisces/Desktop/Os_Final/OSdesign/include/sconst.inc"
+%include "/home/caopeng/Tinix-master/include/sconst.inc"
 
 ; µ¼Èëº¯Êý
 extern	cstart
