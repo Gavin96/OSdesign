@@ -11,9 +11,9 @@ org  0100h
 	jmp	LABEL_START		; Start
 
 ; 下面是 FAT12 磁盘的头, 之所以包含它是因为下面用到了磁盘的一些信息
-%include	"/home/caopeng/Tinix-master/boot/include/fat12hdr.inc"
-%include	"/home/caopeng/Tinix-master/boot/include/load.inc"
-%include	"/home/caopeng/Tinix-master/boot/include/pm.inc"
+%include	"/home/pisces/Desktop/Os_Final/OSdesign/boot/include/fat12hdr.inc"
+%include	"/home/pisces/Desktop/Os_Final/OSdesign/boot/include/load.inc"
+%include	"/home/pisces/Desktop/Os_Final/OSdesign/boot/include/pm.inc"
 
 
 ; GDT ------------------------------------------------------------------------------------------------------------------------------------------------------------

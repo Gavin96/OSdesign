@@ -21,14 +21,14 @@ BaseOfStack		equ	0100h	; 调试状态下堆栈基地址(栈底, 从这个位置向低地址生长)
 BaseOfStack		equ	07c00h	; Boot状态下堆栈基地址(栈底, 从这个位置向低地址生长)
 %endif
 
-%include	"/home/caopeng/Tinix-master/boot/include/load.inc"
+%include	"/home/pisces/Desktop/Os_Final/OSdesign/boot/include/load.inc"
 ;================================================================================================
 
 	jmp short LABEL_START		; Start to boot.
 	nop				; 这个 nop 不可少
 
 ; 下面是 FAT12 磁盘的头, 之所以包含它是因为下面用到了磁盘的一些信息
-%include	"/home/caopeng/Tinix-master/boot/include/fat12hdr.inc"
+%include	"/home/pisces/Desktop/Os_Final/OSdesign/boot/include/fat12hdr.inc"
 
 LABEL_START:	
 	mov	ax, cs
