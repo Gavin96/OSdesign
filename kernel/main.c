@@ -82,13 +82,13 @@ PUBLIC int tinix_main()
 	t_8		rpl;
 	int		eflags;
 	for(i=0;i<NR_TASKS+NR_PROCS;i++){
-		if (i < NR_TASKS) {	/* ÈÎÎñ */
+		if (i < NR_TASKS) {	/* 脠脦脦帽 */
 			p_task		= task_table + i;
 			privilege	= PRIVILEGE_TASK;
 			rpl		= RPL_TASK;
 			eflags		= 0x1202;	/* IF=1, IOPL=1, bit 2 is always 1 */
 		}
-		else {			/* ÓÃ»§œø³Ì */
+		else {			/* 脫脙禄搂艙酶鲁脤 */
 			p_task		= user_proc_table + (i - NR_TASKS);
 			privilege	= PRIVILEGE_USER;
 			rpl		= RPL_USER;
@@ -171,7 +171,7 @@ void clearScreen()
 void help()
 {
 	printf("           ***********************************************\n");
-	printf("                          Welcome to Our OS System ^_^ \n");
+	printf("                  Welcome to Our Operating System ^_^     \n");
 	printf("           ***********************************************\n");
 	printf("\n");
 	printf("      *****  help         --------  show the help menu    *****\n");
@@ -181,6 +181,7 @@ void help()
 	printf("      *****  kill 2~5     --------  kill the process 2~5  *****\n");
 	printf("      *****  start 2~5    --------  start the process 2~5 *****\n");
 	printf("      *****  show         --------  show the process state*****\n");
+        printf("      *****  quit         --------  quit our System       *****\n");
 	printf("      *********************************************************\n");
 	printf("\n");
 }
@@ -255,6 +256,11 @@ void dealWithCommand(char* command)
 		show();
 		return ;
 	}
+        if (strcmp(command,"quit")==0)
+        {
+                quit();
+                while(1);
+        }
 
 	char str[100];
 	int i=0;
@@ -398,6 +404,43 @@ void TestE()
 
 	}
 }
+/*======================================================================*
+				quit 
+*=======================================================================*/
+void quit()
+{
+       clearScreen();
+       //milli_delay(2);
+       disp_str("\n");
+       disp_str("\n");
+       disp_str("\n");
+       disp_str("\n");
+       disp_str("\n");
+
+
+
+//disp_color_str("ssssssss\n",0x0A);
+//disp_color_str("ssssssss\n",0x0B);
+//disp_color_str("s s s s s s s s\n",0x1B);
+//disp_color_str("s s s ss sss\n",0x1A);
+//disp_color_str("s s s ss sss\n",0xA1);
+//disp_color_str("s s s ss sss\n",0xA1);
+//disp_color_str("ssssssss\n",0x8A);
+//disp_color_str("ssssssss\n",0x8B);
+//disp_color_str("ssssssss\n",0x9A);
+//disp_color_str("ssssssss\n",0x08);
+       disp_str("           ");
+       disp_color_str("  OOOO   OOOO   OOOO       OO    OO   OO   O   O\n",0x8C);
+       disp_str("           ");
+       disp_color_str(" OO      O      O           O   O    O  O  O   O\n",0x8B);
+       disp_str("           ");
+       disp_color_str("  OOOO   OOOO   OOOO          OO     O  O  O   O\n",0x8A);
+       disp_str("           ");
+       disp_color_str("    OO   O      O             OO     O  O  O   O\n",0x8D);
+       disp_str("           ");
+       disp_color_str(" OOOO    OOOO   OOOO          OO      OO   OOOOO\n",0x8E);
+}
+
 
 /*======================================================================*
 				goBangGame
@@ -463,7 +506,7 @@ void displayGameState()
 
 }
 
-int checkParameter(int x, int y)	//Œì²éÍæŒÒÊäÈëµÄ²ÎÊýÊÇ·ñÕýÈ·
+int checkParameter(int x, int y)	//艗矛虏茅脥忙艗脪脢盲脠毛碌脛虏脦脢媒脢脟路帽脮媒脠路
 {
 	int n=15;
 	if (x<0 || y<0 || x>=n || y>=n) return 0;
@@ -471,13 +514,13 @@ int checkParameter(int x, int y)	//Œì²éÍæŒÒÊäÈëµÄ²ÎÊýÊÇ·ñ�
 	return 1;
 }
 
-//žüÐÂµÄÎ»ÖÃÎªx£¬y£¬ÒòŽË Ö»ÒªŒì²é×ø±êÎªx£¬yµÄÎ»ÖÃ
-int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñÊ€£©
+//啪眉脨脗碌脛脦禄脰脙脦陋x拢卢y拢卢脪貌沤脣 脰禄脪陋艗矛虏茅脳酶卤锚脦陋x拢卢y碌脛脦禄脰脙
+int win(int x,int y)		//脢鈧€没路碌禄脴1    路帽脭貌0拢拧脛驴脟掳脦脼脠脣禄帽脢鈧Ｂ?
 {
 	int n=15;
 	int i,j;
 	int gameCount;
-	//×óÓÒÀ©Õ¹
+	//脳贸脫脪脌漏脮鹿
 	gameCount=1;
 	for (j=y+1; j<n; j++)
 	{
@@ -491,7 +534,7 @@ int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñ�
 	}
 	if (gameCount>=5) return 1;
 
-	//ÉÏÏÂÀ©Õ¹
+	//脡脧脧脗脌漏脮鹿
 	gameCount=1;
 	for (i=x-1; i>0; i--)
 	{
@@ -505,7 +548,7 @@ int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñ�
 	}
 	if (gameCount>=5) return 1;
 
-	//Õý¶ÔœÇÏßÀ©Õ¹
+	//脮媒露脭艙脟脧脽脌漏脮鹿
 	gameCount=1;
 	for (i=x-1,j=y-1; i>=0 && j>=0; i--,j--)
 	{
@@ -519,7 +562,7 @@ int win(int x,int y)		//Ê€Àû·µ»Ø1    ·ñÔò0£šÄ¿Ç°ÎÞÈË»ñ�
 	}
 	if (gameCount>=5) return 1;
 
-	//žº¶ÔœÇÏßÀ©Õ¹
+	//啪潞露脭艙脟脧脽脌漏脮鹿
 	gameCount=1;
 	for (i=x-1,j=y+1; i>=0 && j<n; i--,j++)
 	{
@@ -615,18 +658,18 @@ void free4(int x1,int y1,int x2,int y2,int *ff1,int *ff2)
 
 int getPossibleByAD(int attack,int defence,int attackFree1,int attackFree2,int defenceFree1,int defenceFree2)
 {
-	if (attack>=5) return 20;						//5¹¥»÷
-	if (defence>=5) return 19;						//5·ÀÓù
-	if (attack==4 && (attackFree1>=1 && attackFree2>=1)) return 18;		//4¹¥»÷ 2±ß
-	if (attack==4 && (attackFree1>=1 || attackFree2>=1)) return 17;		//4¹¥»÷ 1±ß
-	if (defence==4 && (defenceFree1>=1 || defenceFree2>=1)) return 16;	//4·ÀÓù
-	if (attack==3 && (attackFree1>=2 && attackFree2>=2)) return 15;		//3¹¥»÷ 2±ß
-	if (defence==3 && (defenceFree1>=2 && defenceFree2>=2)) return 14;	//3·ÀÓù 2±ß
-	if (defence==3 && (defenceFree1>=2 || defenceFree2>=2)) return 13;	//3·ÀÓù 1±ß
-	if (attack==3 && (attackFree1>=2 || attackFree2>=2)) return 12;		//3¹¥»÷ 1±ß
-	if (attack==2 && (attackFree1>=3 && attackFree2>=3)) return 11;		//2¹¥»÷ 2±ß
-	if (defence==2 && defenceFree1+defenceFree2>=3) return 10;	//2·ÀÓù 2±ß
-	if (defence==2 && defenceFree1+defenceFree2>=3) return 9;		//2·ÀÓù 1±ß
+	if (attack>=5) return 20;						//5鹿楼禄梅
+	if (defence>=5) return 19;						//5路脌脫霉
+	if (attack==4 && (attackFree1>=1 && attackFree2>=1)) return 18;		//4鹿楼禄梅 2卤脽
+	if (attack==4 && (attackFree1>=1 || attackFree2>=1)) return 17;		//4鹿楼禄梅 1卤脽
+	if (defence==4 && (defenceFree1>=1 || defenceFree2>=1)) return 16;	//4路脌脫霉
+	if (attack==3 && (attackFree1>=2 && attackFree2>=2)) return 15;		//3鹿楼禄梅 2卤脽
+	if (defence==3 && (defenceFree1>=2 && defenceFree2>=2)) return 14;	//3路脌脫霉 2卤脽
+	if (defence==3 && (defenceFree1>=2 || defenceFree2>=2)) return 13;	//3路脌脫霉 1卤脽
+	if (attack==3 && (attackFree1>=2 || attackFree2>=2)) return 12;		//3鹿楼禄梅 1卤脽
+	if (attack==2 && (attackFree1>=3 && attackFree2>=3)) return 11;		//2鹿楼禄梅 2卤脽
+	if (defence==2 && defenceFree1+defenceFree2>=3) return 10;	//2路脌脫霉 2卤脽
+	if (defence==2 && defenceFree1+defenceFree2>=3) return 9;		//2路脌脫霉 1卤脽
 	if (attack==1 && attackFree1+attackFree2>=4) return 8;
 	if (defence==1 && defenceFree1+defenceFree2>=4) return 7;
 	return 6;
@@ -643,10 +686,10 @@ int getPossible(int x,int y)
 	int defenceFree2;
 	int possible=-100;
 
-	//×óÓÒÀ©Õ¹
+	//脳贸脫脪脌漏脮鹿
 	int al,ar;
 	int dl,dr;
-	//ºáÏò¹¥»÷
+	//潞谩脧貌鹿楼禄梅
 	for (al=y-1; al>=0; al--)
 	{
 		if (gameMap[x][al]!='*') break;
@@ -655,7 +698,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[x][ar]!='*') break;
 	}
-	//ºáÏò·ÀÊØ
+	//潞谩脧貌路脌脢脴
 	for (dl=y-1; dl>=0; dl--)
 	{
 		if (gameMap[x][dl]!='o') break;
@@ -670,7 +713,7 @@ int getPossible(int x,int y)
 	free1(x,dl,dr,&defenceFree1,&defenceFree2);
 	possible=max(possible,getPossibleByAD(attack,defence,attackFree1,attackFree2,defenceFree1,defenceFree2));
 
-	//ÊúÏòœø¹¥
+	//脢煤脧貌艙酶鹿楼
 	for (al=x-1; al>=0; al--)
 	{
 		if (gameMap[al][y]!='*') break;
@@ -679,7 +722,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[ar][y]!='*') break;
 	}
-	//ÊúÏò·ÀÊØ
+	//脢煤脧貌路脌脢脴
 	for (dl=x-1; dl>=0; dl--)
 	{
 		if (gameMap[dl][y]!='o') break;
@@ -694,7 +737,7 @@ int getPossible(int x,int y)
 	free2(dl,dr,y,&defenceFree1,&defenceFree2);
 	possible=max(possible,getPossibleByAD(attack,defence,attackFree1,attackFree2,defenceFree1,defenceFree2));
 
-	//Õý¶ÔœÇÏßœø¹¥
+	//脮媒露脭艙脟脧脽艙酶鹿楼
 	int al1,al2,ar1,ar2;
 	int dl1,dl2,dr1,dr2;
 	for (al1=x-1,al2=y-1; al1>=0 && al2>=0; al1--,al2--)
@@ -705,7 +748,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[ar1][ar2]!='*') break;
 	}
-	//Õý¶ÔœÇÏß·ÀÊØ
+	//脮媒露脭艙脟脧脽路脌脢脴
 	for (dl1=x-1,dl2=y-1; dl1>=0 && dl2>=0; dl1--,dl2--)
 	{
 		if (gameMap[dl1][dl2]!='o') break;
@@ -720,7 +763,7 @@ int getPossible(int x,int y)
 	free3(dl1,dl2,dr1,dr2,&defenceFree1,&defenceFree2);
 	possible=max(possible,getPossibleByAD(attack,defence,attackFree1,attackFree1,defenceFree1,defenceFree2));
 
-	//žº¶ÔœÇÏßœø¹¥
+	//啪潞露脭艙脟脧脽艙酶鹿楼
 	for (al1=x-1,al2=y+1; al1>=0 && al2<n; al1--,al2++)
 	{
 		if (gameMap[al1][al2]!='*') break;
@@ -729,7 +772,7 @@ int getPossible(int x,int y)
 	{
 		if (gameMap[ar1][ar2]!='*') break;
 	}
-	//žº¶ÔœÇÏß·ÀÊØ
+	//啪潞露脭艙脟脧脽路脌脢脴
 	for (dl1=x-1,dl2=y+1; dl1>=0 && dl2<n; dl1--,dl2++)
 	{
 		if (gameMap[dl1][dl2]!='o') break;
@@ -870,7 +913,7 @@ void DisPlayOpen()//开机动画
 	disp_str("             Q                      Q\n");
 	disp_str("             Q======================Q\n");
 	
-	milli_delay(1);
+	milli_delay(2);
 	
 	disp_str("sss");
 	
@@ -904,7 +947,7 @@ void DisPlayOpen()//开机动画
 	disp_str("             Q                      Q\n");
 	disp_str("             Q======================Q\n");
 
-	milli_delay(2);
+	milli_delay(8);
 	
 
 
@@ -938,7 +981,7 @@ void DisPlayOpen()//开机动画
 	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
         disp_str("Q\n");
 	disp_str("             Q======================Q\n");
-	milli_delay(4);
+	milli_delay(2);
 	
 
 
@@ -975,7 +1018,7 @@ void DisPlayOpen()//开机动画
 	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
         disp_str("Q\n");
         disp_str("             Q======================Q\n");
-	milli_delay(4);
+	milli_delay(2);
 
 
 
@@ -1013,7 +1056,7 @@ void DisPlayOpen()//开机动画
 	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
         disp_str("Q\n");
         disp_str("             Q======================Q\n");
-	milli_delay(3);
+	milli_delay(2);
 	
 
 
@@ -1055,7 +1098,7 @@ void DisPlayOpen()//开机动画
 	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
         disp_str("Q\n");
 	disp_str("             Q======================Q\n");
-	milli_delay(3);
+	milli_delay(2);
 
 
 
@@ -1102,7 +1145,7 @@ void DisPlayOpen()//开机动画
         disp_str("Q\n");
 
 	disp_str("             Q======================Q\n");
-	milli_delay(3);
+	milli_delay(2);
 
 
 
@@ -1151,7 +1194,7 @@ void DisPlayOpen()//开机动画
         disp_str("Q\n");
 
 	disp_str("             Q======================Q\n");
-	milli_delay(3);
+	milli_delay(2);
 
 
 
@@ -1258,7 +1301,7 @@ void DisPlayOpen()//开机动画
 	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
         disp_str("Q\n");
 	disp_str("             Q======================Q\n");
-	milli_delay(2);
+	milli_delay(3);
 	
 
 
@@ -1314,9 +1357,6 @@ void DisPlayOpen()//开机动画
         disp_str("             Q");
 	disp_color_str("AAAAAAAAAAAAAAAAAAAAAA",0x3);
         disp_str("Q\n");
-
-
-
 	disp_str("             Q======================Q\n");
 	
 	
@@ -1347,7 +1387,7 @@ void displayWelcome()
         disp_color_str(" w  ww  w    eeeeee   ll       cc         oo   oo     m  m   m   eeeeee\n",0x4);
         disp_color_str(" w  w  w     ee       ll       cc         oo   oo     m  m   m   ee\n",0x4);
         disp_color_str("  w   w      eeeeee   llllllll    cccc       oo       m      m   eeeeee\n",0x4);
-        milli_delay(4);
+        milli_delay(2);
 	
         clearScreen();
 
