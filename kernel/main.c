@@ -40,18 +40,19 @@ void strlwr(char *str)
 void addToQueue(PROCESS* p)
 {
 	p->state=kRUNNABLE;
-	if (p->priority>=10)
-	{
+	//if (p->priority>=10)
+	//{
 		firstQueue[firstLen]=p;
 		firstLen++;
 		p->ticks=2;
 		p->whichQueue=1;
-	}
-	else if(p->priority>=5)
+	//}
+	/*else if(p->priority>=5)
 	{
 		secondQueue[secondLen]=p;
 		secondLen++;
-		p->ticks=3;
+		p->ticks=4
+;
 		p->whichQueue=2;
 	}
 	else
@@ -60,7 +61,7 @@ void addToQueue(PROCESS* p)
 		lastLen++;
 		p->ticks=p->priority;
 		p->whichQueue=3;
-	}
+	}*/
 }
 
 /*======================================================================*
@@ -131,10 +132,10 @@ PUBLIC int tinix_main()
 	//init priority
 	proc_table[0].priority = 15;
 	proc_table[1].priority =  2;
-	proc_table[2].priority =  12;
+	proc_table[2].priority =  7;
 	proc_table[3].priority =  4;
-	proc_table[4].priority =  7;
-	proc_table[5].priority =  12;
+	proc_table[4].priority =  13;
+	proc_table[5].priority =  6;
 	proc_table[6].priority =  10;
 	proc_table[7].priority = 20;
 
@@ -149,7 +150,7 @@ PUBLIC int tinix_main()
 	proc_table[2].nr_tty = 1;
 	proc_table[3].nr_tty = 1;
 	proc_table[4].nr_tty = 1;
-	proc_table[5].nr_tty = 2;
+	proc_table[5].nr_tty = 1;
 	proc_table[6].nr_tty = 3;
 	proc_table[7].nr_tty = 4;
 
@@ -463,7 +464,7 @@ void TestB()
 	{
 		int i = 0;
 		while(1){
-			printf("2   ");
+			printf("B   ");
 			milli_delay(1000);
 		}
 
@@ -483,7 +484,7 @@ void TestC()
 	{
 		int i = 0;
 		while(1){
-			printf("3   ");
+			printf("C   ");
 			milli_delay(1000);
 		}
 
@@ -498,7 +499,7 @@ void TestD()
 	{
 		int i = 0;
 		while(1){
-			printf("4   ");
+			printf("D   ");
 			milli_delay(1000);
 		}
 
@@ -514,7 +515,7 @@ void TestE()
 	{
 		int i = 0;
 		while(1){
-			printf("5   ");
+			printf("E   ");
 			milli_delay(1000);
 		}
 
@@ -904,18 +905,18 @@ void start_game()
 	
 
 	while (moveTty->startScanf); 
-		strlwr(moveTty->str);
+		//strlwr(moveTty->str);
 		if (strcmp(moveTty->str,"w")==0 || strcmp(moveTty->str,"W")==0){
        			move_up();
                 	break;}
             	else if (strcmp(moveTty->str,"a")==0 || strcmp(moveTty->str,"A")==0){
-       			move_up();
+       			move_left();
                 	break;}
 		else if (strcmp(moveTty->str,"s")==0 || strcmp(moveTty->str,"S")==0){
-       			move_up();
+       			move_down();
                 	break;}
 		else if (strcmp(moveTty->str,"d")==0 || strcmp(moveTty->str,"D")==0){
-       			move_up();
+       			move_right();
                 	break;}
 		else if (strcmp(moveTty->str,"q")==0 || strcmp(moveTty->str,"Q")==0){
        			printf("Are you sure? Y/N\n");
